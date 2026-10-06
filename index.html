@@ -1,182 +1,97 @@
 <!DOCTYPE html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AID — AI-агент, который закрывает рутину бизнеса</title>
-<meta name="description" content="AID автоматизирует заявки, аутрич, запись клиентов и автоответы. Под ключ, с измеримым результатом.">
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="dark light"><meta name="theme-color" content="#111315">
+<title>AID — AI-агент, который закрывает рутину бизнеса</title><meta name="description" content="AID автоматизирует рутину малого и среднего бизнеса: заявки, аутрич, запись клиентов, автоответы 24/7.">
 <style>
-:root{--bg:#0a0a0a;--card:#111;--line:#1f1f1f;--tx:#ededed;--tx2:#8a8a8a;--ac:#4f8eff;--ok:#10b981}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--tx);font:400 16px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-decoration:none}
-.w{max-width:1080px;margin:0 auto;padding:0 24px}
-header{position:sticky;top:0;z-index:10;background:rgba(10,10,10,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-header .w{display:flex;align-items:center;justify-content:space-between;height:60px;gap:24px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px}
-.logo svg{color:var(--ac)}
-.nav{display:flex;gap:28px;font-size:14px;color:var(--tx2)}
-.nav a:hover{color:var(--tx)}
-.btn{display:inline-flex;align-items:center;gap:8px;cursor:pointer;padding:12px 22px;border-radius:8px;font-weight:500;font-size:15px;background:var(--ac);color:#fff;border:1px solid transparent;transition:all .15s}
-.btn:hover{filter:brightness(1.1)}
-.btn.o{background:transparent;color:var(--tx);border-color:#2a2a2a}
-.btn.o:hover{border-color:#5a5a5a;filter:none}
-.btn.s{padding:9px 16px;font-size:14px}
-.btn i{font-style:normal;transition:transform .15s}
-.btn:hover i{transform:translateX(3px)}
-.hero{padding:100px 0 80px;border-bottom:1px solid var(--line)}
-.badge{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:100px;border:1px solid #2a2a2a;color:var(--tx2);font:400 12px 'SF Mono',Monaco,monospace;margin-bottom:28px}
-.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
-h1{font-size:38px;line-height:1.08;font-weight:600;letter-spacing:-.035em;max-width:760px}
-h2{font-size:26px;line-height:1.2;font-weight:600;letter-spacing:-.02em;margin-bottom:40px}
-h2 small{display:block;font-size:13px;color:#5a5a5a;font-weight:400;font-family:'SF Mono',Monaco,monospace;margin-bottom:12px;letter-spacing:0}
-.lead{color:var(--tx2);font-size:17px;max-width:640px;margin:28px 0 36px;line-height:1.6}
-.cta{display:flex;gap:12px;flex-wrap:wrap}
-section{padding:80px 0;border-bottom:1px solid var(--line)}
-.g{display:grid;gap:1px;grid-template-columns:1fr;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.c{background:var(--card);padding:28px;transition:background .15s}
-.c:hover{background:#151515}
-.c h3{font-size:15px;font-weight:600;margin-bottom:8px}
-.c p{color:var(--tx2);font-size:14px;line-height:1.55}
-.num{font:400 12px 'SF Mono',Monaco,monospace;color:#5a5a5a;margin-bottom:16px}
-.tar{display:grid;gap:1px;grid-template-columns:1fr;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.t{background:var(--card);padding:32px;display:flex;flex-direction:column}
-.t.f{background:#141414}
-.t .tag{font:400 12px 'SF Mono',Monaco,monospace;color:#5a5a5a;margin-bottom:20px;text-transform:uppercase;letter-spacing:.08em}
-.t.f .tag{color:var(--ac)}
-.t .price{font-size:44px;font-weight:600;letter-spacing:-.035em;line-height:1;margin-bottom:6px}
-.t .per{color:var(--tx2);font-size:14px;margin-bottom:24px}
-.t p{color:var(--tx2);font-size:14px;margin-bottom:28px;flex:1}
-.t .btn{width:100%;justify-content:center}
-ol{list-style:none;counter-reset:s;display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-ol li{counter-increment:s;display:flex;gap:20px;align-items:center;padding:22px 26px;border-bottom:1px solid var(--line);font-size:15px}
-ol li:last-child{border-bottom:0}
-ol li::before{content:counter(s,decimal-leading-zero);font:400 13px 'SF Mono',Monaco,monospace;color:#5a5a5a;flex:none;width:28px}
-.docs{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.doc{background:var(--card);padding:24px 28px;display:flex;justify-content:space-between;align-items:center;transition:background .15s}
-.doc:hover{background:#151515}
-.doc h3{font-size:15px;font-weight:600;margin-bottom:4px}
-.doc p{color:var(--tx2);font-size:13px}
-.doc span{color:#5a5a5a;font-size:18px}
-.k{display:flex;flex-wrap:wrap;gap:12px}
-footer{padding:40px 0;color:#5a5a5a;font-size:13px}
-footer .w{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px 24px;align-items:center}
-footer nav{display:flex;gap:24px;flex-wrap:wrap}
-footer a:hover{color:var(--tx)}
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.stat{background:var(--card);padding:32px 24px;text-align:center}
-.stat b{display:block;font-size:40px;font-weight:600;letter-spacing:-.03em;line-height:1;margin-bottom:8px}
-.stat span{color:var(--tx2);font-size:13px}
-.faq{display:grid;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.faq details{border-bottom:1px solid var(--line);background:var(--card)}
-.faq details:last-child{border-bottom:0}
-.faq summary{padding:22px 28px;cursor:pointer;font-weight:500;font-size:15px;list-style:none;display:flex;justify-content:space-between;align-items:center}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";color:#5a5a5a;font-size:20px;font-weight:300}
-.faq details[open] summary::after{content:"−"}
-.faq .a{padding:0 28px 22px;color:var(--tx2);font-size:14px;line-height:1.6}
-@media(min-width:640px){h1{font-size:52px}h2{font-size:32px}.g.two,.g.three,.tar{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(4,1fr)}}
-@media(min-width:900px){h1{font-size:64px}.hero{padding:140px 0 100px}section{padding:110px 0}.g.three,.tar{grid-template-columns:repeat(3,1fr)}.nav{display:flex}}
-@media(max-width:768px){.nav{display:none}}
+:root{--bg:#111315;--bg2:#181b1e;--card:#1a1d21;--line:#2a2e33;--tx:#ececec;--tx2:#9aa0a6;--ac:#4f8eff;--ok:#4fd1a1;--no:#ff7a7a;--sh:0 1px 3px rgba(0,0,0,.3)}
+@media(prefers-color-scheme:light){:root{--bg:#fafafa;--bg2:#f1f2f4;--card:#fff;--line:#e3e5e8;--tx:#111315;--tx2:#5f656b;--ok:#0f9d6e;--no:#d64545;--sh:0 1px 3px rgba(0,0,0,.06)}}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;scroll-padding-top:120px}
+body{background:var(--bg);color:var(--tx);font:400 16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;-webkit-text-size-adjust:100%}
+a{color:var(--ac);text-decoration:none}a:hover{text-decoration:underline}
+.w{max-width:1100px;margin:0 auto;padding:0 24px}
+.promo{background:linear-gradient(135deg,#4f8eff,#a855f7);color:#fff;font-size:14px;padding:10px 0;text-align:center}.promo a{color:#fff;font-weight:600;text-decoration:underline;margin-left:8px}
+header{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+header .w{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 16px;min-height:60px}
+.logo{font-size:22px;font-weight:700;letter-spacing:-.03em;color:var(--tx)}.logo:hover{text-decoration:none}.logo em{font-style:normal;color:var(--ac)}
+nav.m{order:3;width:100%;display:flex;gap:20px;overflow-x:auto;white-space:nowrap;padding:0 0 12px;font-size:14px}nav.m a{color:var(--tx2)}nav.m a:hover{color:var(--tx);text-decoration:none}
+.btn{display:inline-block;cursor:pointer;padding:14px 28px;border-radius:10px;font-weight:600;color:#fff;background:linear-gradient(135deg,#4f8eff,#a855f7);transition:transform .2s,filter .2s;text-align:center;border:1px solid transparent}
+.btn:hover{filter:brightness(1.1);transform:translateY(-2px);text-decoration:none}
+.btn i{display:inline-block;font-style:normal;margin-left:6px;transition:transform .2s}.btn:hover i{transform:translateX(4px)}
+.btn.s{padding:9px 16px;font-size:14px}.btn.o{background:transparent;color:var(--ac);border-color:var(--ac)}.btn.o:hover{background:rgba(79,142,255,.1);filter:none}
+.hero{position:relative;overflow:hidden;padding:56px 0}
+.hero:before{content:"";position:absolute;left:30%;top:-60px;width:600px;height:400px;max-width:100%;background:radial-gradient(closest-side,#4f8eff,transparent);opacity:.15;filter:blur(80px);pointer-events:none}
+.hero .w{position:relative;display:grid;gap:40px;align-items:center}
+.badge{display:inline-block;padding:6px 14px;border-radius:100px;background:rgba(79,142,255,.1);color:var(--ac);font-size:13px;margin-bottom:24px}
+h1{font-size:38px;line-height:1.1;font-weight:700;letter-spacing:-.03em}h1 em{font-style:italic;background:linear-gradient(135deg,#4f8eff,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:30px;line-height:1.2;font-weight:600;letter-spacing:-.02em;margin-bottom:12px}.sub{color:var(--tx2);max-width:680px;margin-bottom:40px}
+.lead{color:var(--tx2);font-size:17px;max-width:600px;margin:24px 0 32px}.mono{font:13px 'SF Mono',Monaco,monospace;color:var(--tx2);margin-top:20px}
+.tk{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--sh);font-size:15px}
+.tk .h{display:flex;justify-content:space-between;font:12px 'SF Mono',Monaco,monospace;color:var(--tx2);margin-bottom:16px}.tk .h b{color:var(--ok);font-weight:400}
+.tk p{padding:12px 16px;border-radius:12px;margin-top:10px;max-width:92%}.tk .u{background:var(--bg2)}.tk .a{background:rgba(79,142,255,.12);margin-left:auto}.tk small{display:block;color:var(--tx2);margin-top:16px;font-size:13px}
+.st{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:48px}
+.st div{background:var(--card);padding:20px 24px}.st b{display:block;font-size:26px;letter-spacing:-.02em}.st span{color:var(--tx2);font-size:14px}
+section{padding:64px 0}.hr{height:1px;border:0;background:linear-gradient(90deg,transparent,#4f8eff,transparent);opacity:.3}
+.g{display:grid;gap:24px;grid-template-columns:1fr}
+.c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:var(--sh);transition:transform .2s ease,border-color .2s ease}.c:hover{transform:translateY(-2px);border-color:var(--ac)}
+.c h3{font-size:18px;font-weight:600;margin-bottom:8px}.c p{color:var(--tx2);font-size:15px}.ic{color:var(--ac);font-size:20px;display:block;margin-bottom:12px}
+.pc{list-style:none;padding:0;margin-top:16px;font-size:14px;display:grid;gap:6px}.pc li{padding-left:22px;position:relative}.pc li:before{position:absolute;left:0;font-weight:700}
+.pc .p:before{content:"+";color:var(--ok)}.pc .n:before{content:"−";color:var(--no)}
+.cmp{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}.cmp .r{display:grid;grid-template-columns:1fr;gap:4px;padding:18px 24px;border-top:1px solid var(--line);font-size:15px}.cmp .r:first-child{border-top:0}
+.cmp .r b{font-weight:600}.cmp .r span{color:var(--tx2)}.cmp .r span:last-child{color:var(--tx)}.cmp .hd{display:none;font-size:13px;color:var(--tx2)}
+.t{display:flex;flex-direction:column}.t .n1{font-size:46px;font-weight:700;letter-spacing:-.03em;line-height:1.1;margin:12px 0 4px}.t .u{color:var(--tx2);font-size:14px}.t p{margin:16px 0 0}.t .pc{flex:1;margin-bottom:24px}.t .btn{width:100%}
+.t.f{border-color:var(--ac)}.tag{font-size:13px;color:var(--ac);min-height:20px}
+ol{list-style:none;padding:0;display:grid;gap:16px;counter-reset:s}ol li{counter-increment:s;display:flex;gap:20px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px}
+ol li:before{content:counter(s);flex:none;width:36px;height:36px;border-radius:50%;background:rgba(79,142,255,.12);color:var(--ac);display:grid;place-items:center;font-weight:600}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:12px}summary{cursor:pointer;list-style:none;padding:20px 24px;font-weight:600;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}summary:after{content:"+";color:var(--ac);font-size:22px;line-height:1}details[open] summary:after{content:"−"}details p{padding:0 24px 20px;color:var(--tx2)}
+.k{display:flex;flex-wrap:wrap;gap:16px}
+footer{border-top:1px solid var(--line);padding:48px 0 32px;color:var(--tx2);font-size:14px;background:var(--bg2)}
+footer .w{display:grid;gap:32px}footer h4{color:var(--tx);font-size:14px;margin-bottom:12px}footer a{display:block;color:var(--tx2);margin-bottom:8px}footer .cp{border-top:1px solid var(--line);padding-top:20px}
+.doc{padding:56px 0}.doc h1{font-size:34px;margin-bottom:8px}.doc h2{font-size:20px;margin:32px 0 8px}.doc p,.doc li{color:var(--tx2);max-width:720px}.doc ul{padding-left:20px}.doc .d{font-size:14px}
+.js .rv{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}.js .rv.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}.js .rv{opacity:1;transform:none}}
+a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+@media(min-width:481px){h1{font-size:48px}.g.two,.g.three{grid-template-columns:repeat(2,1fr)}.st{grid-template-columns:repeat(4,1fr)}footer .w{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:769px){h1{font-size:60px}h2{font-size:38px}.hero{padding:96px 0}.hero .w{grid-template-columns:1.2fr 1fr}section{padding:96px 0}.g.three{grid-template-columns:repeat(3,1fr)}
+header .w{flex-wrap:nowrap}nav.m{order:0;width:auto;padding:0}.cmp .r{grid-template-columns:1fr 1fr 1fr}.cmp .hd{display:grid}footer .w{grid-template-columns:2fr 1fr 1fr}}
 </style></head><body>
-
-<header><div class="w">
-<a class="logo" href="index.html">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="1" y="1" width="22" height="22" rx="6" stroke="currentColor" stroke-width="1.5"/><path d="M7 17l5-10 5 10M9.5 13.5h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-AID</a>
-<nav class="nav"><a href="#features">Возможности</a><a href="#how">Как начать</a><a href="#tariffs">Тарифы</a><a href="#faq">Вопросы</a></nav>
-<a class="btn s" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Открыть бота</a>
-</div></header>
-
-<main>
-
-<div class="hero"><div class="w">
-<span class="badge">работает 24/7 · подписка в Telegram</span>
-<h1>AI-агент, который закрывает рутину бизнеса</h1>
-<p class="lead">AID берёт на себя обработку заявок, аутрич, запись клиентов и автоответы. Вы занимаетесь делом — агент работает в фоне. Под ключ, с измеримым результатом.</p>
-<div class="cta">
-<a class="btn" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Открыть бота <i>→</i></a>
-<a class="btn o" href="#features">Что умеет</a>
-</div>
-</div></div>
-
-<section><div class="w">
-<h2><small>// цифры</small>AID в фактах</h2>
-<div class="stats">
-<div class="stat"><b>24/7</b><span>отвечает без выходных</span></div>
-<div class="stat"><b>0 ₽</b><span>первый тест — 3 дня</span></div>
-<div class="stat"><b>999 ₽</b><span>в месяц за всё</span></div>
-<div class="stat"><b>17%</b><span>скидка при оплате за год</span></div>
-</div>
-</div></section>
-
-<section id="features"><div class="w">
-<h2><small>// возможности</small>Что делает AID</h2>
-<div class="g three">
-<div class="c"><div class="num">01</div><h3>Автоответы и заявки</h3><p>Клиент получает ответ мгновенно, заявка квалифицируется и уходит в работу без вашего участия. Интеграция с CRM.</p></div>
-<div class="c"><div class="num">02</div><h3>Аутрич</h3><p>Холодные касания, персонализация, follow-up. Возвращаем тех, кто не ответил, доводим до демо.</p></div>
-<div class="c"><div class="num">03</div><h3>Запись клиентов</h3><p>Голосом, в чате, через сайт. Напоминания, синхронизация с календарём, переносы.</p></div>
-<div class="c"><div class="num">04</div><h3>Мультиканальность</h3><p>Telegram, WhatsApp, голосовые линии. Один сценарий — на всех каналах, где вас ищут клиенты.</p></div>
-<div class="c"><div class="num">05</div><h3>Внутренние агенты</h3><p>Помощники для команды: работа с документами, почтой, CRM. Справки, регламенты, типовые задачи.</p></div>
-<div class="c"><div class="num">06</div><h3>Порядок в данных</h3><p>Контакты, заявки, отчёты, аналитика — собраны в одном месте. Без ручного ввода.</p></div>
-</div>
-</div></section>
-
-<section id="how"><div class="w">
-<h2><small>// как начать</small>Пять шагов</h2>
-<ol>
-<li>Откройте бота в Telegram</li>
-<li>Выберите тариф командой /subscribe</li>
-<li>Оплатите картой или через СБП</li>
-<li>Доступ откроется сразу после оплаты</li>
-<li>Чек придёт на указанный email</li>
-</ol>
-</div></section>
-
-<section id="tariffs"><div class="w">
-<h2><small>// тарифы</small>Стоимость подписки</h2>
-<div class="tar">
-<div class="t"><div class="tag">Пробный</div><div class="price">0 ₽</div><div class="per">3 дня</div><p>Полный доступ на 3 дня. Один раз на пользователя.</p><a class="btn o" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Попробовать <i>→</i></a></div>
-<div class="t f"><div class="tag">Основной</div><div class="price">999 ₽</div><div class="per">30 дней</div><p>Все функции AID без ограничений.</p><a class="btn" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Оформить <i>→</i></a></div>
-<div class="t"><div class="tag">Год · выгодно</div><div class="price">9 990 ₽</div><div class="per">365 дней · скидка 17%</div><p>Все функции AID. Экономия 1 998 ₽ в год.</p><a class="btn o" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Оформить <i>→</i></a></div>
-</div>
-</div></section>
-
-<section id="faq"><div class="w">
-<h2><small>// вопросы</small>Частые вопросы</h2>
-<div class="faq">
-<details><summary>Что умеет AID?</summary><div class="a">Обрабатывает заявки, запускает аутрич, записывает клиентов, отвечает на вопросы 24/7. Работает в Telegram, WhatsApp и голосовых линиях. Настраивается под конкретный бизнес.</div></details>
-<details><summary>Нужен ли программист для настройки?</summary><div class="a">Нет. AID уже работает. Вы получаете доступ через Telegram и настраиваете сценарии под себя. Если нужна кастомная логика — поможем.</div></details>
-<details><summary>Как быстро запускается?</summary><div class="a">Базовые сценарии — в день подключения. Кастомные — от 2 до 5 дней в зависимости от сложности.</div></details>
-<details><summary>Можно ли вернуть деньги?</summary><div class="a">Да, в течение 3 дней с момента оплаты, если сервисом не пользовались. Подробнее — в условиях возврата.</div></details>
-<details><summary>Как оплатить?</summary><div class="a">Картой или через СБП прямо в Telegram-боте. Чек приходит на email.</div></details>
-</div>
-</div></section>
-
-<section id="docs"><div class="w">
-<h2><small>// документы</small>Оферта и условия</h2>
-<div class="docs">
-<a class="doc" href="oferta.html"><div><h3>Публичная оферта</h3><p>Условия предоставления услуг, порядок оплаты и возврата</p></div><span>→</span></a>
-<a class="doc" href="privacy.html"><div><h3>Политика конфиденциальности</h3><p>Какие данные собираются и как используются</p></div><span>→</span></a>
-<a class="doc" href="refund.html"><div><h3>Условия возврата</h3><p>Порядок возврата средств за подписку</p></div><span>→</span></a>
-</div>
-</div></section>
-
-<section id="contacts"><div class="w">
-<h2><small>// контакты</small>Связаться с AID</h2>
-<div class="k">
-<a class="btn" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Бот в Telegram <i>→</i></a>
-<a class="btn o" href="https://t.me/AIDNEWLVL" target="_blank" rel="noopener">Telegram-канал</a>
-<a class="btn o" href="mailto:aiaidnewlvl@yandex.com">aiaidnewlvl@yandex.com</a>
-</div>
-</div></section>
-
-</main>
-
-<footer><div class="w">
-<span>© 2026 AID</span>
-<nav>
-<a href="oferta.html">Оферта</a>
-<a href="privacy.html">Конфиденциальность</a>
-<a href="refund.html">Возврат</a>
-</nav>
-</div></footer>
-
+<div class="promo">Пробный доступ — 3 дня бесплатно, один раз<a href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Попробовать</a></div>
+<header><div class="w"><a class="logo" href="index.html">A<em>I</em>D</a><nav class="m"><a href="#features">Функции</a><a href="#compare">Сравнение</a><a href="#price">Тарифы</a><a href="#start">Как начать</a><a href="#faq">Вопросы</a><a href="#contacts">Контакты</a></nav><a class="btn s" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Написать боту</a></div></header>
+<main><div class="hero"><div class="w"><div><span class="badge">◆ Автоматизация бизнеса · 2026</span>
+<h1>AI-агент, который закрывает <em>рутину бизнеса</em></h1>
+<p class="lead">AID автоматизирует рутину малого и среднего бизнеса: обработку заявок, аутрич, запись клиентов и автоответы 24/7. Под ключ, с измеримым результатом.</p>
+<a class="btn" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Написать боту<i>→</i></a><p class="mono">// подписка и оплата прямо в Telegram</p></div>
+<div class="tk"><div class="h"><span>ПРИМЕР ДИАЛОГА</span><b>● онлайн</b></div><p class="u">Хочу записаться на завтра</p><p class="a">Свободно 11:00 и 15:30. Какое время удобно?</p><p class="u">15:30</p><p class="a">Записал. Напомню за час до визита.</p><small>Иллюстрация сценария записи</small></div>
+<div class="st" style="grid-column:1/-1"><div><b>24/7</b><span>автоответы</span></div><div><b>3 дня</b><span>пробный, бесплатно</span></div><div><b>999 ₽</b><span>тариф на месяц</span></div><div><b>−17%</b><span>при оплате на год</span></div></div></div></div><hr class="hr">
+<section id="features"><div class="w"><h2 class="rv">Что входит в подписку</h2><p class="sub rv">Все функции AID — с плюсами и ограничениями, чтобы вы заранее знали, чего ждать.</p><div class="g three">
+<div class="c rv"><span class="ic">◆</span><h3>Автоответы и обработка заявок</h3><p>Бот отвечает клиентам сразу и принимает заявки без участия сотрудника.</p><ul class="pc"><li class="p">отвечает круглосуточно</li><li class="p">заявка не теряется</li><li class="n">сценарии и частые вопросы нужно описать один раз</li><li class="n">сложные случаи лучше передавать человеку</li></ul></div>
+<div class="c rv"><span class="ic">▸</span><h3>Аутрич</h3><p>Холодные касания и follow-up: напоминает тем, кто не ответил.</p><ul class="pc"><li class="p">follow-up не забывается</li><li class="p">не нужно писать каждому вручную</li><li class="n">результат зависит от базы и предложения</li><li class="n">тексты нужно согласовать заранее</li></ul></div>
+<div class="c rv"><span class="ic">●</span><h3>Автоматизация записи клиентов</h3><p>Предлагает свободное время, записывает и напоминает о визите.</p><ul class="pc"><li class="p">меньше звонков и переписки</li><li class="p">меньше неявок благодаря напоминаниям</li><li class="n">нужен актуальный график</li><li class="n">часть клиентов всё равно предпочтёт позвонить</li></ul></div>
+<div class="c rv"><span class="ic">✈</span><h3>Боты для Telegram, WhatsApp и голосовых линий</h3><p>Один сценарий работает в нескольких каналах.</p><ul class="pc"><li class="p">клиент пишет туда, где ему удобно</li><li class="p">единая логика ответов</li><li class="n">у каждого канала свои правила и ограничения</li><li class="n">подключение канала настраивается отдельно</li></ul></div>
+<div class="c rv"><span class="ic">✦</span><h3>Внутренние агенты для команды</h3><p>Помощники для сотрудников: справки, регламенты, типовые задачи.</p><ul class="pc"><li class="p">быстрее выполняются типовые задачи</li><li class="p">знания компании под рукой</li><li class="n">AI может ошибаться — важное проверяйте</li><li class="n">нужны актуальные материалы компании</li></ul></div>
+<div class="c rv"><span class="ic">✓</span><h3>Порядок в данных</h3><p>Контакты и отчёты собираются в одном месте.</p><ul class="pc"><li class="p">меньше ручной сортировки</li><li class="p">отчёты быстрее</li><li class="n">качество зависит от исходных данных</li></ul></div>
+<div class="c rv"><span class="ic">❖</span><h3>AI-ассистент и документы</h3><p>Несколько AI-моделей; работа с PDF, Word и фото с текстом.</p><ul class="pc"><li class="p">один бот для вопросов, текстов и файлов</li><li class="p">есть перевод текстов</li><li class="n">AI может ошибаться</li><li class="n">качество распознавания зависит от фото</li></ul></div>
+</div></div></section><hr class="hr">
+<section id="compare"><div class="w"><h2 class="rv">Чем AID отличается от ручной рутины</h2><p class="sub rv">Без громких обещаний: просто сравнение подходов.</p><div class="cmp rv"><div class="r hd"><span></span><span>Как обычно</span><span>С AID</span></div><div class="r"><b>Ответ клиентам</b><span>В рабочее время, когда освободится сотрудник</span><span>Сразу и круглосуточно</span></div><div class="r"><b>Запись</b><span>Звонки и переписка вручную</span><span>Бот предлагает время и записывает</span></div><div class="r"><b>Повторные касания</b><span>Часто забываются</span><span>Идут по сценарию</span></div><div class="r"><b>Каналы</b><span>Каждый настраивается отдельно</span><span>Один сценарий для Telegram, WhatsApp, голоса</span></div><div class="r"><b>Стоимость</b><span>Оплата времени сотрудника</span><span>От 999 ₽ в месяц</span></div></div></div></section><hr class="hr">
+<section id="price"><div class="w"><h2 class="rv">Тарифы</h2><p class="sub rv">Во всех тарифах — все функции AID. Отличается только срок.</p><div class="g three">
+<div class="c t rv"><span class="tag"></span><h3>Пробный</h3><div class="n1">0 ₽</div><div class="u">3 дня, один раз</div><p>Полный доступ, чтобы попробовать.</p><ul class="pc"><li class="p">бесплатно</li><li class="p">доступны все функции</li><li class="n">только 3 дня</li><li class="n">повторно не выдаётся</li></ul><a class="btn o" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Оформить<i>→</i></a></div>
+<div class="c t rv f"><span class="tag">Гибкий</span><h3>Месяц</h3><div class="n1">999 ₽</div><div class="u">30 дней</div><p>Все функции AID.</p><ul class="pc"><li class="p">все функции</li><li class="p">можно не привязываться надолго</li><li class="n">дороже в пересчёте на год</li></ul><a class="btn" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Оформить<i>→</i></a></div>
+<div class="c t rv"><span class="tag">Выгодно</span><h3>Год</h3><div class="n1">9 990 ₽</div><div class="u">365 дней</div><p>Все функции AID. Скидка 17%.</p><ul class="pc"><li class="p">выгоднее месяца: экономия 1 998 ₽</li><li class="p">не нужно продлевать каждый месяц</li><li class="n">платёж сразу за весь срок</li></ul><a class="btn o" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Оформить<i>→</i></a></div>
+</div></div></section><hr class="hr">
+<section id="start"><div class="w"><h2 class="rv">Как начать</h2><p class="sub rv">Пять шагов — и вы в работе.</p><ol><li class='rv'>Открой бота в Telegram</li><li class='rv'>Выбери тариф командой /subscribe</li><li class='rv'>Оплати картой или через СБП</li><li class='rv'>Доступ откроется сразу</li><li class='rv'>Чек придёт на email</li></ol></div></section><hr class="hr">
+<section id="faq"><div class="w"><h2 class="rv">Вопросы и ответы</h2><p class="sub rv">Коротко о главном.</p>
+<details class='rv'><summary>Что такое AID?</summary><p>Это AI-агент в Telegram, который берёт на себя рутину малого и среднего бизнеса: заявки, аутрич, запись клиентов и автоответы.</p></details>
+<details class='rv'><summary>Какой результат я получу?</summary><p>Результат зависит от задачи, настройки сценариев и вашей клиентской базы. Конкретных цифр мы не обещаем — начните с бесплатных 3 дней и оцените сами.</p></details>
+<details class='rv'><summary>Как оформить подписку?</summary><p>Откройте бота, отправьте /subscribe, выберите тариф и оплатите картой или через СБП. Доступ откроется сразу, чек придёт на email.</p></details>
+<details class='rv'><summary>Что после пробного периода?</summary><p>Пробный доступ действует 3 дня и выдаётся один раз. Чтобы продолжить, оформите тариф «Месяц» или «Год».</p></details>
+<details class='rv'><summary>Можно ли вернуть деньги?</summary><p>Да, в течение 3 дней при отсутствии использования. Напишите заявление на aiaidnewlvl@yandex.com — подробности в <a href='refund.html'>условиях возврата</a>.</p></details>
+<details class='rv'><summary>Какие данные вы собираете?</summary><p>Telegram ID, email и историю платежей. Третьим лицам данные не передаются, кроме Т-Банка для приёма платежей. Подробнее — в <a href='privacy.html'>политике конфиденциальности</a>.</p></details>
+<details class='rv'><summary>AI может ошибаться?</summary><p>Да, как любой AI. Поэтому важные решения и данные лучше проверять, а сложные обращения клиентов передавать человеку.</p></details>
+</div></section><hr class="hr">
+<section id="contacts"><div class="w"><h2 class="rv">Контакты</h2><p class="sub rv">Все каналы связи.</p><div class="k rv">
+<a class="btn" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Бот в Telegram<i>→</i></a><a class="btn o" href="https://t.me/AIDNEWLVL" target="_blank" rel="noopener">Telegram-канал</a><a class="btn o" href="mailto:aiaidnewlvl@yandex.com">aiaidnewlvl@yandex.com</a></div></div></section></main>
+<footer><div class="w"><div><a class="logo" href="index.html">A<em>I</em>D</a><p style="margin-top:12px;max-width:340px">AI-агент для малого и среднего бизнеса: заявки, аутрич, запись клиентов и автоответы 24/7.</p></div>
+<div><h4>Сайт</h4><a href="index.html#features">Функции</a><a href="index.html#price">Тарифы</a><a href="index.html#faq">Вопросы</a></div>
+<div><h4>Документы и связь</h4><a href="oferta.html">Оферта</a><a href="privacy.html">Политика конфиденциальности</a><a href="refund.html">Условия возврата</a><a href="https://t.me/AIDNEWLVL" target="_blank" rel="noopener">Telegram-канал</a><a href="mailto:aiaidnewlvl@yandex.com">aiaidnewlvl@yandex.com</a></div>
+<div class="cp" style="grid-column:1/-1">© 2026 AID</div></div></footer>
+<script>document.documentElement.classList.add('js');if('IntersectionObserver'in window){var o=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('on');o.unobserve(x.target)}})},{threshold:.1});document.querySelectorAll('.rv').forEach(function(el){o.observe(el)})}else{document.querySelectorAll('.rv').forEach(function(el){el.classList.add('on')})}</script>
 </body></html>
