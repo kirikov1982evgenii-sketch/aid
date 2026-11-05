@@ -1,97 +1,535 @@
 <!DOCTYPE html>
-<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="dark light"><meta name="theme-color" content="#111315">
-<title>AID — AI-агент, который закрывает рутину бизнеса</title><meta name="description" content="AID автоматизирует рутину малого и среднего бизнеса: заявки, аутрич, запись клиентов, автоответы 24/7.">
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AID — Архив выжившего</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#111315;--bg2:#181b1e;--card:#1a1d21;--line:#2a2e33;--tx:#ececec;--tx2:#9aa0a6;--ac:#4f8eff;--ok:#4fd1a1;--no:#ff7a7a;--sh:0 1px 3px rgba(0,0,0,.3)}
-@media(prefers-color-scheme:light){:root{--bg:#fafafa;--bg2:#f1f2f4;--card:#fff;--line:#e3e5e8;--tx:#111315;--tx2:#5f656b;--ok:#0f9d6e;--no:#d64545;--sh:0 1px 3px rgba(0,0,0,.06)}}
-*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;scroll-padding-top:120px}
-body{background:var(--bg);color:var(--tx);font:400 16px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;-webkit-text-size-adjust:100%}
-a{color:var(--ac);text-decoration:none}a:hover{text-decoration:underline}
-.w{max-width:1100px;margin:0 auto;padding:0 24px}
-.promo{background:linear-gradient(135deg,#4f8eff,#a855f7);color:#fff;font-size:14px;padding:10px 0;text-align:center}.promo a{color:#fff;font-weight:600;text-decoration:underline;margin-left:8px}
-header{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-header .w{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:0 16px;min-height:60px}
-.logo{font-size:22px;font-weight:700;letter-spacing:-.03em;color:var(--tx)}.logo:hover{text-decoration:none}.logo em{font-style:normal;color:var(--ac)}
-nav.m{order:3;width:100%;display:flex;gap:20px;overflow-x:auto;white-space:nowrap;padding:0 0 12px;font-size:14px}nav.m a{color:var(--tx2)}nav.m a:hover{color:var(--tx);text-decoration:none}
-.btn{display:inline-block;cursor:pointer;padding:14px 28px;border-radius:10px;font-weight:600;color:#fff;background:linear-gradient(135deg,#4f8eff,#a855f7);transition:transform .2s,filter .2s;text-align:center;border:1px solid transparent}
-.btn:hover{filter:brightness(1.1);transform:translateY(-2px);text-decoration:none}
-.btn i{display:inline-block;font-style:normal;margin-left:6px;transition:transform .2s}.btn:hover i{transform:translateX(4px)}
-.btn.s{padding:9px 16px;font-size:14px}.btn.o{background:transparent;color:var(--ac);border-color:var(--ac)}.btn.o:hover{background:rgba(79,142,255,.1);filter:none}
-.hero{position:relative;overflow:hidden;padding:56px 0}
-.hero:before{content:"";position:absolute;left:30%;top:-60px;width:600px;height:400px;max-width:100%;background:radial-gradient(closest-side,#4f8eff,transparent);opacity:.15;filter:blur(80px);pointer-events:none}
-.hero .w{position:relative;display:grid;gap:40px;align-items:center}
-.badge{display:inline-block;padding:6px 14px;border-radius:100px;background:rgba(79,142,255,.1);color:var(--ac);font-size:13px;margin-bottom:24px}
-h1{font-size:38px;line-height:1.1;font-weight:700;letter-spacing:-.03em}h1 em{font-style:italic;background:linear-gradient(135deg,#4f8eff,#a855f7);-webkit-background-clip:text;background-clip:text;color:transparent}
-h2{font-size:30px;line-height:1.2;font-weight:600;letter-spacing:-.02em;margin-bottom:12px}.sub{color:var(--tx2);max-width:680px;margin-bottom:40px}
-.lead{color:var(--tx2);font-size:17px;max-width:600px;margin:24px 0 32px}.mono{font:13px 'SF Mono',Monaco,monospace;color:var(--tx2);margin-top:20px}
-.tk{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:var(--sh);font-size:15px}
-.tk .h{display:flex;justify-content:space-between;font:12px 'SF Mono',Monaco,monospace;color:var(--tx2);margin-bottom:16px}.tk .h b{color:var(--ok);font-weight:400}
-.tk p{padding:12px 16px;border-radius:12px;margin-top:10px;max-width:92%}.tk .u{background:var(--bg2)}.tk .a{background:rgba(79,142,255,.12);margin-left:auto}.tk small{display:block;color:var(--tx2);margin-top:16px;font-size:13px}
-.st{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:48px}
-.st div{background:var(--card);padding:20px 24px}.st b{display:block;font-size:26px;letter-spacing:-.02em}.st span{color:var(--tx2);font-size:14px}
-section{padding:64px 0}.hr{height:1px;border:0;background:linear-gradient(90deg,transparent,#4f8eff,transparent);opacity:.3}
-.g{display:grid;gap:24px;grid-template-columns:1fr}
-.c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:var(--sh);transition:transform .2s ease,border-color .2s ease}.c:hover{transform:translateY(-2px);border-color:var(--ac)}
-.c h3{font-size:18px;font-weight:600;margin-bottom:8px}.c p{color:var(--tx2);font-size:15px}.ic{color:var(--ac);font-size:20px;display:block;margin-bottom:12px}
-.pc{list-style:none;padding:0;margin-top:16px;font-size:14px;display:grid;gap:6px}.pc li{padding-left:22px;position:relative}.pc li:before{position:absolute;left:0;font-weight:700}
-.pc .p:before{content:"+";color:var(--ok)}.pc .n:before{content:"−";color:var(--no)}
-.cmp{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}.cmp .r{display:grid;grid-template-columns:1fr;gap:4px;padding:18px 24px;border-top:1px solid var(--line);font-size:15px}.cmp .r:first-child{border-top:0}
-.cmp .r b{font-weight:600}.cmp .r span{color:var(--tx2)}.cmp .r span:last-child{color:var(--tx)}.cmp .hd{display:none;font-size:13px;color:var(--tx2)}
-.t{display:flex;flex-direction:column}.t .n1{font-size:46px;font-weight:700;letter-spacing:-.03em;line-height:1.1;margin:12px 0 4px}.t .u{color:var(--tx2);font-size:14px}.t p{margin:16px 0 0}.t .pc{flex:1;margin-bottom:24px}.t .btn{width:100%}
-.t.f{border-color:var(--ac)}.tag{font-size:13px;color:var(--ac);min-height:20px}
-ol{list-style:none;padding:0;display:grid;gap:16px;counter-reset:s}ol li{counter-increment:s;display:flex;gap:20px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px}
-ol li:before{content:counter(s);flex:none;width:36px;height:36px;border-radius:50%;background:rgba(79,142,255,.12);color:var(--ac);display:grid;place-items:center;font-weight:600}
-details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:12px}summary{cursor:pointer;list-style:none;padding:20px 24px;font-weight:600;display:flex;justify-content:space-between;gap:16px}
-summary::-webkit-details-marker{display:none}summary:after{content:"+";color:var(--ac);font-size:22px;line-height:1}details[open] summary:after{content:"−"}details p{padding:0 24px 20px;color:var(--tx2)}
-.k{display:flex;flex-wrap:wrap;gap:16px}
-footer{border-top:1px solid var(--line);padding:48px 0 32px;color:var(--tx2);font-size:14px;background:var(--bg2)}
-footer .w{display:grid;gap:32px}footer h4{color:var(--tx);font-size:14px;margin-bottom:12px}footer a{display:block;color:var(--tx2);margin-bottom:8px}footer .cp{border-top:1px solid var(--line);padding-top:20px}
-.doc{padding:56px 0}.doc h1{font-size:34px;margin-bottom:8px}.doc h2{font-size:20px;margin:32px 0 8px}.doc p,.doc li{color:var(--tx2);max-width:720px}.doc ul{padding-left:20px}.doc .d{font-size:14px}
-.js .rv{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}.js .rv.on{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}.js .rv{opacity:1;transform:none}}
-a:focus-visible,.btn:focus-visible,summary:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
-@media(min-width:481px){h1{font-size:48px}.g.two,.g.three{grid-template-columns:repeat(2,1fr)}.st{grid-template-columns:repeat(4,1fr)}footer .w{grid-template-columns:repeat(2,1fr)}}
-@media(min-width:769px){h1{font-size:60px}h2{font-size:38px}.hero{padding:96px 0}.hero .w{grid-template-columns:1.2fr 1fr}section{padding:96px 0}.g.three{grid-template-columns:repeat(3,1fr)}
-header .w{flex-wrap:nowrap}nav.m{order:0;width:auto;padding:0}.cmp .r{grid-template-columns:1fr 1fr 1fr}.cmp .hd{display:grid}footer .w{grid-template-columns:2fr 1fr 1fr}}
-</style></head><body>
-<div class="promo">Пробный доступ — 3 дня бесплатно, один раз<a href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Попробовать</a></div>
-<header><div class="w"><a class="logo" href="index.html">A<em>I</em>D</a><nav class="m"><a href="#features">Функции</a><a href="#compare">Сравнение</a><a href="#price">Тарифы</a><a href="#start">Как начать</a><a href="#faq">Вопросы</a><a href="#contacts">Контакты</a></nav><a class="btn s" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Написать боту</a></div></header>
-<main><div class="hero"><div class="w"><div><span class="badge">◆ Автоматизация бизнеса · 2026</span>
-<h1>AI-агент, который закрывает <em>рутину бизнеса</em></h1>
-<p class="lead">AID автоматизирует рутину малого и среднего бизнеса: обработку заявок, аутрич, запись клиентов и автоответы 24/7. Под ключ, с измеримым результатом.</p>
-<a class="btn" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Написать боту<i>→</i></a><p class="mono">// подписка и оплата прямо в Telegram</p></div>
-<div class="tk"><div class="h"><span>ПРИМЕР ДИАЛОГА</span><b>● онлайн</b></div><p class="u">Хочу записаться на завтра</p><p class="a">Свободно 11:00 и 15:30. Какое время удобно?</p><p class="u">15:30</p><p class="a">Записал. Напомню за час до визита.</p><small>Иллюстрация сценария записи</small></div>
-<div class="st" style="grid-column:1/-1"><div><b>24/7</b><span>автоответы</span></div><div><b>3 дня</b><span>пробный, бесплатно</span></div><div><b>999 ₽</b><span>тариф на месяц</span></div><div><b>−17%</b><span>при оплате на год</span></div></div></div></div><hr class="hr">
-<section id="features"><div class="w"><h2 class="rv">Что входит в подписку</h2><p class="sub rv">Все функции AID — с плюсами и ограничениями, чтобы вы заранее знали, чего ждать.</p><div class="g three">
-<div class="c rv"><span class="ic">◆</span><h3>Автоответы и обработка заявок</h3><p>Бот отвечает клиентам сразу и принимает заявки без участия сотрудника.</p><ul class="pc"><li class="p">отвечает круглосуточно</li><li class="p">заявка не теряется</li><li class="n">сценарии и частые вопросы нужно описать один раз</li><li class="n">сложные случаи лучше передавать человеку</li></ul></div>
-<div class="c rv"><span class="ic">▸</span><h3>Аутрич</h3><p>Холодные касания и follow-up: напоминает тем, кто не ответил.</p><ul class="pc"><li class="p">follow-up не забывается</li><li class="p">не нужно писать каждому вручную</li><li class="n">результат зависит от базы и предложения</li><li class="n">тексты нужно согласовать заранее</li></ul></div>
-<div class="c rv"><span class="ic">●</span><h3>Автоматизация записи клиентов</h3><p>Предлагает свободное время, записывает и напоминает о визите.</p><ul class="pc"><li class="p">меньше звонков и переписки</li><li class="p">меньше неявок благодаря напоминаниям</li><li class="n">нужен актуальный график</li><li class="n">часть клиентов всё равно предпочтёт позвонить</li></ul></div>
-<div class="c rv"><span class="ic">✈</span><h3>Боты для Telegram, WhatsApp и голосовых линий</h3><p>Один сценарий работает в нескольких каналах.</p><ul class="pc"><li class="p">клиент пишет туда, где ему удобно</li><li class="p">единая логика ответов</li><li class="n">у каждого канала свои правила и ограничения</li><li class="n">подключение канала настраивается отдельно</li></ul></div>
-<div class="c rv"><span class="ic">✦</span><h3>Внутренние агенты для команды</h3><p>Помощники для сотрудников: справки, регламенты, типовые задачи.</p><ul class="pc"><li class="p">быстрее выполняются типовые задачи</li><li class="p">знания компании под рукой</li><li class="n">AI может ошибаться — важное проверяйте</li><li class="n">нужны актуальные материалы компании</li></ul></div>
-<div class="c rv"><span class="ic">✓</span><h3>Порядок в данных</h3><p>Контакты и отчёты собираются в одном месте.</p><ul class="pc"><li class="p">меньше ручной сортировки</li><li class="p">отчёты быстрее</li><li class="n">качество зависит от исходных данных</li></ul></div>
-<div class="c rv"><span class="ic">❖</span><h3>AI-ассистент и документы</h3><p>Несколько AI-моделей; работа с PDF, Word и фото с текстом.</p><ul class="pc"><li class="p">один бот для вопросов, текстов и файлов</li><li class="p">есть перевод текстов</li><li class="n">AI может ошибаться</li><li class="n">качество распознавания зависит от фото</li></ul></div>
-</div></div></section><hr class="hr">
-<section id="compare"><div class="w"><h2 class="rv">Чем AID отличается от ручной рутины</h2><p class="sub rv">Без громких обещаний: просто сравнение подходов.</p><div class="cmp rv"><div class="r hd"><span></span><span>Как обычно</span><span>С AID</span></div><div class="r"><b>Ответ клиентам</b><span>В рабочее время, когда освободится сотрудник</span><span>Сразу и круглосуточно</span></div><div class="r"><b>Запись</b><span>Звонки и переписка вручную</span><span>Бот предлагает время и записывает</span></div><div class="r"><b>Повторные касания</b><span>Часто забываются</span><span>Идут по сценарию</span></div><div class="r"><b>Каналы</b><span>Каждый настраивается отдельно</span><span>Один сценарий для Telegram, WhatsApp, голоса</span></div><div class="r"><b>Стоимость</b><span>Оплата времени сотрудника</span><span>От 999 ₽ в месяц</span></div></div></div></section><hr class="hr">
-<section id="price"><div class="w"><h2 class="rv">Тарифы</h2><p class="sub rv">Во всех тарифах — все функции AID. Отличается только срок.</p><div class="g three">
-<div class="c t rv"><span class="tag"></span><h3>Пробный</h3><div class="n1">0 ₽</div><div class="u">3 дня, один раз</div><p>Полный доступ, чтобы попробовать.</p><ul class="pc"><li class="p">бесплатно</li><li class="p">доступны все функции</li><li class="n">только 3 дня</li><li class="n">повторно не выдаётся</li></ul><a class="btn o" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Оформить<i>→</i></a></div>
-<div class="c t rv f"><span class="tag">Гибкий</span><h3>Месяц</h3><div class="n1">999 ₽</div><div class="u">30 дней</div><p>Все функции AID.</p><ul class="pc"><li class="p">все функции</li><li class="p">можно не привязываться надолго</li><li class="n">дороже в пересчёте на год</li></ul><a class="btn" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Оформить<i>→</i></a></div>
-<div class="c t rv"><span class="tag">Выгодно</span><h3>Год</h3><div class="n1">9 990 ₽</div><div class="u">365 дней</div><p>Все функции AID. Скидка 17%.</p><ul class="pc"><li class="p">выгоднее месяца: экономия 1 998 ₽</li><li class="p">не нужно продлевать каждый месяц</li><li class="n">платёж сразу за весь срок</li></ul><a class="btn o" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Оформить<i>→</i></a></div>
-</div></div></section><hr class="hr">
-<section id="start"><div class="w"><h2 class="rv">Как начать</h2><p class="sub rv">Пять шагов — и вы в работе.</p><ol><li class='rv'>Открой бота в Telegram</li><li class='rv'>Выбери тариф командой /subscribe</li><li class='rv'>Оплати картой или через СБП</li><li class='rv'>Доступ откроется сразу</li><li class='rv'>Чек придёт на email</li></ol></div></section><hr class="hr">
-<section id="faq"><div class="w"><h2 class="rv">Вопросы и ответы</h2><p class="sub rv">Коротко о главном.</p>
-<details class='rv'><summary>Что такое AID?</summary><p>Это AI-агент в Telegram, который берёт на себя рутину малого и среднего бизнеса: заявки, аутрич, запись клиентов и автоответы.</p></details>
-<details class='rv'><summary>Какой результат я получу?</summary><p>Результат зависит от задачи, настройки сценариев и вашей клиентской базы. Конкретных цифр мы не обещаем — начните с бесплатных 3 дней и оцените сами.</p></details>
-<details class='rv'><summary>Как оформить подписку?</summary><p>Откройте бота, отправьте /subscribe, выберите тариф и оплатите картой или через СБП. Доступ откроется сразу, чек придёт на email.</p></details>
-<details class='rv'><summary>Что после пробного периода?</summary><p>Пробный доступ действует 3 дня и выдаётся один раз. Чтобы продолжить, оформите тариф «Месяц» или «Год».</p></details>
-<details class='rv'><summary>Можно ли вернуть деньги?</summary><p>Да, в течение 3 дней при отсутствии использования. Напишите заявление на aiaidnewlvl@yandex.com — подробности в <a href='refund.html'>условиях возврата</a>.</p></details>
-<details class='rv'><summary>Какие данные вы собираете?</summary><p>Telegram ID, email и историю платежей. Третьим лицам данные не передаются, кроме Т-Банка для приёма платежей. Подробнее — в <a href='privacy.html'>политике конфиденциальности</a>.</p></details>
-<details class='rv'><summary>AI может ошибаться?</summary><p>Да, как любой AI. Поэтому важные решения и данные лучше проверять, а сложные обращения клиентов передавать человеку.</p></details>
-</div></section><hr class="hr">
-<section id="contacts"><div class="w"><h2 class="rv">Контакты</h2><p class="sub rv">Все каналы связи.</p><div class="k rv">
-<a class="btn" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Бот в Telegram<i>→</i></a><a class="btn o" href="https://t.me/AIDNEWLVL" target="_blank" rel="noopener">Telegram-канал</a><a class="btn o" href="mailto:aiaidnewlvl@yandex.com">aiaidnewlvl@yandex.com</a></div></div></section></main>
-<footer><div class="w"><div><a class="logo" href="index.html">A<em>I</em>D</a><p style="margin-top:12px;max-width:340px">AI-агент для малого и среднего бизнеса: заявки, аутрич, запись клиентов и автоответы 24/7.</p></div>
-<div><h4>Сайт</h4><a href="index.html#features">Функции</a><a href="index.html#price">Тарифы</a><a href="index.html#faq">Вопросы</a></div>
-<div><h4>Документы и связь</h4><a href="oferta.html">Оферта</a><a href="privacy.html">Политика конфиденциальности</a><a href="refund.html">Условия возврата</a><a href="https://t.me/AIDNEWLVL" target="_blank" rel="noopener">Telegram-канал</a><a href="mailto:aiaidnewlvl@yandex.com">aiaidnewlvl@yandex.com</a></div>
-<div class="cp" style="grid-column:1/-1">© 2026 AID</div></div></footer>
-<script>document.documentElement.classList.add('js');if('IntersectionObserver'in window){var o=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('on');o.unobserve(x.target)}})},{threshold:.1});document.querySelectorAll('.rv').forEach(function(el){o.observe(el)})}else{document.querySelectorAll('.rv').forEach(function(el){el.classList.add('on')})}</script>
-</body></html>
+  :root{
+    --bg:#0b0a09;
+    --bg2:#141210;
+    --bg3:#1c1916;
+    --ink:#ece6da;          /* спектральный тёплый белый */
+    --ink-dim:#a39a8a;
+    --ink-faint:#6d655a;
+    --line:#35302a;
+    --line-soft:#241f1b;
+    --rust:#c8402e;         /* сигнальный ржавый */
+    --rust-hot:#e85a3f;
+    --amber:#e8a45c;        /* тёплый уголь-отблеск */
+    --fire-a:rgba(200,64,46,.5);
+    --fire-b:rgba(232,164,92,.25);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+    font-size:16px;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--rust);color:var(--bg)}
+  h1,h2,h3{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:-.02em;line-height:1.02}
+  a{color:inherit;text-decoration:none}
+  /* ===== КАСТОМНЫЙ КУРСОР ===== */
+  .cursor{position:fixed;left:0;top:0;z-index:9999;width:44px;height:44px;pointer-events:none;opacity:0;transition:opacity .3s}
+  .cursor::before,.cursor::after{content:"";position:absolute;background:var(--rust)}
+  .cursor::before{left:50%;top:0;width:1px;height:100%;transform:translateX(-50%)}
+  .cursor::after{top:50%;left:0;height:1px;width:100%;transform:translateY(-50%)}
+  html.cursor-on .cursor{opacity:.85}
+  html.cursor-on,html.cursor-on *{cursor:none !important}
+  /* ===== ПРЕЛОАДЕР ===== */
+  #boot{
+    position:fixed;inset:0;z-index:10000;background:var(--bg);
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    gap:1.6rem;font-family:'IBM Plex Mono',monospace;font-size:.8rem;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);
+  }
+  #boot .bootline{display:flex;gap:.8rem;align-items:center}
+  #boot .bootline .ok{color:var(--rust)}
+  #boot .bar{width:min(320px,60vw);height:1px;background:var(--line);position:relative;overflow:hidden}
+  #boot .bar i{position:absolute;inset:0;background:var(--rust);transform:translateX(-100%);animation:load 1.6s cubic-bezier(.22,1,.36,1) forwards}
+  @keyframes load{to{transform:translateX(0)}}
+  #boot.done{opacity:0;pointer-events:none;transition:opacity .5s}
+  /* ===== ТОПБАР ===== */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:1.1rem 2.4rem;
+    font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-dim);
+    background:linear-gradient(180deg, rgba(11,10,9,.9), transparent);
+    mix-blend-mode:normal;
+  }
+  .topbar .sig{display:flex;align-items:center;gap:.7rem;color:var(--ink)}
+  .dotl{width:7px;height:7px;border-radius:50%;background:var(--rust);box-shadow:0 0 14px var(--rust);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  .topbar .nav{display:flex;gap:1.8rem}
+  .topbar .nav a{position:relative;padding-bottom:.25em;opacity:.75;transition:opacity .15s}
+  .topbar .nav a:hover{opacity:1}
+  .topbar .nav a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--rust);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+  .topbar .nav a:hover::after{transform:scaleX(1)}
+  /* ===== ГЕРОЙ ===== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:9rem 2.4rem 3.4rem;
+    overflow:hidden;
+    background:radial-gradient(120% 80% at 50% 100%, var(--bg2) 0%, var(--bg) 60%);
+  }
+  #fire{position:absolute;left:0;right:0;bottom:0;height:60%;z-index:0;opacity:.9}
+  .hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(90% 60% at 50% 110%, transparent 30%, rgba(11,10,9,.85) 100%);}
+  .hero .meta{position:relative;z-index:2;display:flex;gap:1.6rem;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1.6rem}
+  .hero .meta b{color:var(--ink-dim);font-weight:500}
+  .hero h1{position:relative;z-index:2;font-size:clamp(4.2rem,17vw,13rem);font-weight:700;color:var(--ink);line-height:.9;letter-spacing:-.04em}
+  .hero h1 .dot{color:var(--rust)}
+  .hero .lede{position:relative;z-index:2;max-width:56ch;margin-top:2rem;color:var(--ink-dim);font-size:clamp(.95rem,1.4vw,1.1rem);line-height:1.7;padding-left:1.4rem;border-left:2px solid var(--rust)}
+  .hero .cta{position:relative;z-index:2;margin-top:2.8rem;display:flex;gap:1rem;flex-wrap:wrap}
+  /* ===== КНОПКИ ===== */
+  .btn{
+    display:inline-flex;align-items:center;gap:.7em;
+    font-family:'Chakra Petch',sans-serif;font-weight:600;
+    font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;
+    padding:1.05em 2em;
+    border:1px solid var(--line);
+    border-radius:2px;
+    color:var(--ink);
+    background:transparent;
+    transition:background .18s, border-color .18s, color .18s, transform .12s, box-shadow .25s;
+    position:relative;overflow:hidden;
+  }
+  .btn::after{content:"";position:absolute;inset:0;background:var(--rust);transform:translateY(101%);transition:transform .3s cubic-bezier(.22,1,.36,1);z-index:-1}
+  .btn:hover{transform:translateY(-2px);border-color:var(--rust)}
+  .btn:hover::after{transform:translateY(0)}
+  .btn:hover{color:var(--bg)}
+  .btn.primary{background:var(--rust);border-color:var(--rust);color:var(--bg)}
+  .btn.primary::after{background:var(--rust-hot)}
+  .btn.primary:hover{box-shadow:0 0 34px rgba(200,64,46,.4)}
+  .btn.ghost::after{background:var(--ink)}
+  .btn.ghost:hover{border-color:var(--ink)}
+  /* ===== ТИКЕР ===== */
+  .ticker{
+    overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--bg2);padding:.9rem 0;white-space:nowrap;position:relative;
+  }
+  .ticker .track{display:inline-block;animation:scrollx 30s linear infinite}
+  .ticker span{font-family:'Chakra Petch',sans-serif;font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-dim);margin-right:3rem}
+  .ticker span em{font-style:normal;color:var(--rust)}
+  @keyframes scrollx{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  /* ===== СЕКЦИИ ===== */
+  section{position:relative}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 2.4rem}
+  .sec{padding:9rem 0}
+  .kicker{display:inline-flex;align-items:center;gap:.8rem;font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;color:var(--rust);margin-bottom:1.4rem}
+  .kicker::before{content:"";width:34px;height:1px;background:var(--rust)}
+  .sec-title{font-size:clamp(2rem,5vw,3.8rem);max-width:18ch;font-weight:600}
+  .sec-sub{max-width:56ch;color:var(--ink-dim);margin-top:1.4rem;font-size:.98rem}
+  /* ===== РЕЕСТР (ЧТО ДЕЛАЕТ) ===== */
+  .registry{border-top:1px solid var(--line)}
+  .reg-item{
+    display:grid;grid-template-columns:76px 1fr 2fr;gap:2rem;
+    padding:2.6rem 0;border-bottom:1px solid var(--line);
+    align-items:baseline;transition:background .25s;position:relative;
+  }
+  .reg-item:hover{background:var(--bg2)}
+  .reg-item .num{font-family:'Chakra Petch',sans-serif;font-weight:300;font-size:1.1rem;color:var(--ink-faint)}
+  .reg-item h3{font-size:clamp(1.2rem,2.4vw,1.7rem);font-weight:600}
+  .reg-item p{color:var(--ink-dim);font-size:.9rem;line-height:1.6}
+  .reg-item .mark{justify-self:end;color:var(--ink-faint);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;opacity:0;transform:translateX(-6px);transition:all .3s;align-self:center}
+  .reg-item:hover .mark{opacity:1;transform:none;color:var(--rust)}
+  /* ===== ПИК: СИГНАЛ ===== */
+  .signal{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .signal .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center}
+  .statwrap{position:relative;padding:3rem;border:1px solid var(--line);background:var(--bg3);overflow:hidden}
+  .statwrap::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 100%, var(--fire-a) 0%, transparent 55%);opacity:.35}
+  .stat{position:relative;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:clamp(4rem,9vw,7rem);line-height:1;color:var(--ink)}
+  .stat em{font-style:normal;color:var(--rust)}
+  .statlabel{position:relative;margin-top:.8rem;color:var(--ink-dim);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+  .statsub{position:relative;margin-top:2rem;color:var(--ink-faint);font-size:.8rem;line-height:1.6}
+  .bars{display:flex;gap:8px;align-items:flex-end;height:200px;margin-top:2.4rem}
+  .bars i{flex:1;background:linear-gradient(180deg,var(--rust-hot),var(--rust));transform-origin:bottom;animation:rise 1.4s cubic-bezier(.22,1,.36,1) both}
+  .bars i:nth-child(1){height:92%;animation-delay:.05s}.bars i:nth-child(2){height:84%;animation-delay:.1s}
+  .bars i:nth-child(3){height:88%;animation-delay:.15s}.bars i:nth-child(4){height:76%;animation-delay:.2s}
+  .bars i:nth-child(5){height:22%;animation-delay:.25s}.bars i:nth-child(6){height:16%;animation-delay:.3s}
+  .bars i:nth-child(7){height:19%;animation-delay:.35s}.bars i:nth-child(8){height:13%;animation-delay:.4s}
+  @keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  .signal .legend{display:flex;justify-content:space-between;margin-top:.8rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
+  /* ===== ЦЕННИКИ: УРОВНИ СНАРЯЖЕНИЯ ===== */
+  .ranks{border-top:1px solid var(--line)}
+  .rank{
+    display:grid;grid-template-columns:110px 1.3fr 1fr 1fr;gap:2rem;
+    padding:3rem 0;border-bottom:1px solid var(--line);
+    align-items:center;position:relative;transition:background .25s;
+  }
+  .rank:hover{background:var(--bg2)}
+  .rank .rnum{font-family:'Chakra Petch',sans-serif;font-size:2.6rem;font-weight:300;color:var(--ink-faint);line-height:1}
+  .rank .rname{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:600;text-transform:uppercase}
+  .rank .rname small{display:block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:400;letter-spacing:.2em;color:var(--ink-faint);margin-top:.5rem;text-transform:uppercase}
+  .rank .rprice{font-family:'Chakra Petch',sans-serif;font-size:clamp(2.4rem,4.5vw,3.6rem);font-weight:700;line-height:1;letter-spacing:-.03em}
+  .rank .rprice small{font-size:.5em;color:var(--ink-faint);font-weight:400;letter-spacing:.1em}
+  .rank .ract{justify-self:end}
+  .rank .features{grid-column:2 / -1;color:var(--ink-dim);font-size:.85rem;line-height:1.7;padding-top:.4rem}
+  .rank .features span{display:inline-flex;align-items:center;gap:.6rem;margin-right:2rem;margin-bottom:.4rem}
+  .rank .features span::before{content:"▸";color:var(--rust)}
+  .rank.core{background:var(--bg3);border-left:2px solid var(--rust)}
+  .rank.core .rnum{color:var(--rust)}
+  .rank.core .rprice{color:var(--rust-hot)}
+  .rank .tag{position:absolute;top:1.2rem;right:0;background:var(--rust);color:var(--bg);font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:.5em 1.2em}
+  /* ===== ПРОТОКОЛ ===== */
+  .proto{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .proto .step{background:var(--bg);padding:2.2rem 1.8rem;position:relative;min-height:190px}
+  .proto .step .n{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:2.4rem;color:var(--rust);line-height:1;display:block;margin-bottom:1.2rem}
+  .proto .step p{font-size:.8rem;color:var(--ink-dim);line-height:1.6}
+  .proto .step:hover{background:var(--bg2)}
+  /* ===== ДОКУМЕНТЫ/КОНТАКТЫ ===== */
+  .final{background:var(--bg2);border-top:1px solid var(--line)}
+  .final .grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem}
+  .doclist{display:flex;flex-direction:column;margin-top:1.8rem}
+  .doclist a{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0;border-bottom:1px solid var(--line);font-size:.9rem;transition:color .15s, padding-left .2s}
+  .doclist a:hover{color:var(--rust);padding-left:8px}
+  .doclist .x{color:var(--ink-faint);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase}
+  .links{list-style:none;margin-top:1.4rem}
+  .links li{display:flex;justify-content:space-between;padding:1.1rem 0;border-bottom:1px solid var(--line);font-size:.9rem}
+  .links .k{color:var(--ink-faint);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;align-self:center}
+  .links a:hover{color:var(--rust)}
+  footer{border-top:1px solid var(--line);padding:2.6rem 0;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  footer a:hover{color:var(--rust)}
+  /* ===== ПОЯВЛЕНИЕ ===== */
+  .rv{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1)}
+  .rv.in{opacity:1;transform:none}
+  .rv[data-d="1"]{transition-delay:.1s}.rv[data-d="2"]{transition-delay:.2s}.rv[data-d="3"]{transition-delay:.3s}
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+    .rv{opacity:1;transform:none}
+    html.cursor-on,html.cursor-on *{cursor:auto !important}
+  }
+  /* ===== АДАПТИВ ===== */
+  @media (max-width:960px){
+    .hero{justify-content:flex-end;padding:8rem 1.6rem 2.6rem}
+    .signal .grid{grid-template-columns:1fr;gap:2.6rem}
+    .final .grid{grid-template-columns:1fr;gap:3rem}
+    .proto{grid-template-columns:1fr 1fr}
+    .proto .step{min-height:0}
+    .rank{grid-template-columns:1fr;gap:1.2rem}
+    .rank .ract{justify-self:start}
+    .rank .features{grid-column:1}
+    .topbar .nav{display:none}
+    .reg-item{grid-template-columns:1fr;gap:.8rem}
+    .reg-item .mark{display:none}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 1.4rem}
+    .sec{padding:5.5rem 0}
+    .proto{grid-template-columns:1fr}
+    .hero .meta{flex-wrap:wrap}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- ПРЕЛОАДЕР -->
+<div id="boot">
+  <div class="bootline"><span class="ok">■</span> AID // ИНИЦИАЛИЗАЦИЯ АРХИВА</div>
+  <div class="bar"><i></i></div>
+  <div class="bootline" style="font-size:.6rem;color:var(--ink-faint)">ПОЗЫВНОЙ ПОДТВЕРЖДЁН</div>
+</div>
+
+<!-- ТОПБАР -->
+<div class="topbar">
+  <span class="sig"><span class="dotl"></span> AID // ПОЗЫВНОЙ</span>
+  <nav class="nav">
+    <a href="#registry">Реестр</a>
+    <a href="#signal">Сигнал</a>
+    <a href="#ranks">Снаряжение</a>
+    <a href="#proto">Протокол</a>
+    <a href="#final">Связь</a>
+  </nav>
+</div>
+
+<!-- ГЕРОЙ -->
+<header class="hero">
+  <canvas id="fire"></canvas>
+  <div class="hero-overlay"></div>
+  <div class="meta rv in">
+    <span>СЕКТОР <b>БИЗНЕС</b></span>
+    <span>СТАТУС <b style="color:var(--rust)">ОНЛАЙН</b></span>
+    <span>АРХИВ <b>2026</b></span>
+  </div>
+  <h1 class="rv in">AID<span class="dot">.</span></h1>
+  <p class="lede rv in">
+    Рутина съела ваш бизнес. Заявки гниют во входящих, клиенты теряются,
+    отчёты рождаются вручную. Архив выжившего знает одно: после конца света
+    бюрократии остаётся агент, который работает, пока остальные тушат пожары.
+  </p>
+  <div class="cta rv in">
+    <a class="btn primary" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Вызвать агента</a>
+    <a class="btn ghost" href="#ranks">Уровни снаряжения</a>
+  </div>
+</header>
+
+<!-- ТИКЕР -->
+<div class="ticker">
+  <div class="track">
+    <span>АВТООТВЕТЫ <em>24/7</em></span>
+    <span>АУТРИЧ <em>АВТО</em></span>
+    <span>ЗАПИСЬ КЛИЕНТОВ <em>АВТО</em></span>
+    <span>БОТЫ <em>TELEGRAM / WHATSAPP</em></span>
+    <span>РАБОТА <em>ПОД КЛЮЧ</em></span>
+    <span>АВТООТВЕТЫ <em>24/7</em></span>
+    <span>АУТРИЧ <em>АВТО</em></span>
+    <span>ЗАПИСЬ КЛИЕНТОВ <em>АВТО</em></span>
+    <span>БОТЫ <em>TELEGRAM / WHATSAPP</em></span>
+    <span>РАБОТА <em>ПОД КЛЮЧ</em></span>
+  </div>
+</div>
+
+<!-- РЕЕСТР -->
+<section class="sec" id="registry">
+  <div class="wrap">
+    <div class="kicker rv">Боевой лист</div>
+    <h2 class="sec-title rv">Что делает AID</h2>
+    <p class="sec-sub rv">Шесть операторов. Ни одного выходного. Всё — под ключ.</p>
+    <div class="registry" style="margin-top:4rem">
+      <div class="reg-item rv">
+        <span class="num">01</span>
+        <h3>Автоответы и заявки</h3>
+        <p>Ни одна заявка не теряется. Ответ — за секунды, в любое время суток.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+      <div class="reg-item rv" data-d="1">
+        <span class="num">02</span>
+        <h3>Аутрич</h3>
+        <p>Холодные касания, персонализация, follow-up. Вручную это недели — здесь это фон.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+      <div class="reg-item rv" data-d="2">
+        <span class="num">03</span>
+        <h3>Запись клиентов</h3>
+        <p>Голос, чат, сайт. Расписание живёт само, двойных броней нет.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+      <div class="reg-item rv" data-d="3">
+        <span class="num">04</span>
+        <h3>Боты для Telegram и WhatsApp</h3>
+        <p>Поддержка, продажи, онбординг — на автопилоте, в вашем тоне.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+      <div class="reg-item rv" data-d="4">
+        <span class="num">05</span>
+        <h3>Агенты для команды</h3>
+        <p>Внутренние помощники, которые разгружают людей от рутины.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+      <div class="reg-item rv" data-d="5">
+        <span class="num">06</span>
+        <h3>Порядок в данных</h3>
+        <p>Контакты, заявки, отчёты — наведён порядок, всё в одном месте.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ПИК: СИГНАЛ -->
+<section class="sec signal" id="signal">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="kicker rv">Измерение</div>
+        <h2 class="sec-title rv">Сколько часов вы сжигаете на рутину?</h2>
+        <p class="sec-sub rv">Это не абстракция — это часы, которые не возвращаются. AID возвращает их вам, каждый день.</p>
+        <div class="bars rv" data-d="1">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="legend rv" data-d="2">
+          <span>До AID</span><span>После</span>
+        </div>
+      </div>
+      <div class="statwrap rv" data-d="1">
+        <div class="stat">47<em>→</em>3</div>
+        <div class="statlabel">часов в неделю на рутину</div>
+        <div class="statsub">Средняя экономия времени при автоматизации обработки заявок, аутрича и отчётов.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ЦЕННИКИ: УРОВНИ СНАРЯЖЕНИЯ -->
+<section class="sec" id="ranks">
+  <div class="wrap">
+    <div class="kicker rv">Уровни снаряжения</div>
+    <h2 class="sec-title rv">Тарифы</h2>
+    <p class="sec-sub rv">Выживание не бывает бесплатным. Но начинается — с бесплатного.</p>
+    <div class="ranks" style="margin-top:4rem">
+      <div class="rank rv">
+        <span class="rnum">I</span>
+        <div class="rname">Пробный<small>разведка · 3 дня</small></div>
+        <div class="rprice">0 <small>₽ / 3 дня</small></div>
+        <div class="ract"><a class="btn ghost" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Разведка</a></div>
+        <div class="features"><span>Полный доступ на 3 дня</span><span>Один раз на пользователя</span><span>Без карты</span></div>
+      </div>
+      <div class="rank core rv" data-d="1">
+        <span class="tag">Основной</span>
+        <span class="rnum">II</span>
+        <div class="rname">Месяц<small>полное снаряжение</small></div>
+        <div class="rprice">999 <small>₽ / 30 дней</small></div>
+        <div class="ract"><a class="btn primary" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Принять</a></div>
+        <div class="features"><span>Полный доступ ко всем функциям</span><span>Приоритетная связь</span><span>Отмена в любой момент</span></div>
+      </div>
+      <div class="rank rv" data-d="2">
+        <span class="rnum">III</span>
+        <div class="rname">Год<small>дальняя дистанция</small></div>
+        <div class="rprice">9 990 <small>₽ / 365 дней</small></div>
+        <div class="ract"><a class="btn ghost" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">В бой</a></div>
+        <div class="features"><span>Полный доступ на год</span><span>Скидка 17%</span><span>Все будущие функции</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ПРОТОКОЛ -->
+<section class="sec" id="proto">
+  <div class="wrap">
+    <div class="kicker rv">Протокол</div>
+    <h2 class="sec-title rv">Как оплатить и получить доступ</h2>
+    <div class="proto" style="margin-top:4rem">
+      <div class="step rv"><span class="n">1</span><p>Напишите боту в Telegram</p></div>
+      <div class="step rv" data-d="1"><span class="n">2</span><p>Выберите тариф командой /subscribe</p></div>
+      <div class="step rv" data-d="2"><span class="n">3</span><p>Оплатите картой или через СБП</p></div>
+      <div class="step rv" data-d="3"><span class="n">4</span><p>Доступ — сразу после оплаты</p></div>
+      <div class="step rv" data-d="4"><span class="n">5</span><p>Чек — на указанный email</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ДОКУМЕНТЫ / КОНТАКТЫ -->
+<section class="sec final" id="final">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="kicker rv">Архив</div>
+        <h2 class="sec-title rv">Документы</h2>
+        <p class="sec-sub rv" style="margin-bottom:0">Условия — открыто. Без мелкого шрифта.</p>
+        <div class="doclist">
+          <a class="rv" href="https://kirikov1982evgenii-sketch.github.io/aid/oferta.html" target="_blank" rel="noopener">Публичная оферта <span class="x">Открыть →</span></a>
+          <a class="rv" data-d="1" href="https://kirikov1982evgenii-sketch.github.io/aid/privacy.html" target="_blank" rel="noopener">Политика конфиденциальности <span class="x">Открыть →</span></a>
+          <a class="rv" data-d="2" href="https://kirikov1982evgenii-sketch.github.io/aid/refund.html" target="_blank" rel="noopener">Условия возврата <span class="x">Открыть →</span></a>
+        </div>
+      </div>
+      <div>
+        <div class="kicker rv">Связь</div>
+        <h2 class="sec-title rv">Канал связи открыт</h2>
+        <p class="sec-sub rv" style="margin-bottom:0">Штаб работает круглосуточно. Выходные у рутины — не предусмотрены.</p>
+        <ul class="links">
+          <li class="rv"><span class="k">Telegram-бот</span><a href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">@germeskamylove_bot</a></li>
+          <li class="rv" data-d="1"><span class="k">Канал</span><a href="https://t.me/AIDNEWLVL" target="_blank" rel="noopener">@AIDNEWLVL</a></li>
+          <li class="rv" data-d="2"><span class="k">Email</span><a href="mailto:aiaidnewlvl@yandex.com">aiaidnewlvl@yandex.com</a></li>
+          <li class="rv" data-d="3"><span class="k">ИНН</span><span style="color:var(--ink-faint)">[ИНН]</span></li>
+          <li class="rv" data-d="4"><span class="k">ОГРНИП</span><span style="color:var(--ink-faint)">[ОГРНИП]</span></li>
+          <li class="rv" data-d="5"><span class="k">Адрес</span><span style="color:var(--ink-faint)">[Адрес]</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 AID — архив выжившего.</span>
+    <span><a href="https://kirikov1982evgenii-sketch.github.io/aid/privacy.html" target="_blank" rel="noopener">Политика</a> · <a href="https://kirikov1982evgenii-sketch.github.io/aid/oferta.html" target="_blank" rel="noopener">Оферта</a></span>
+  </div>
+</footer>
+
+<script>
+// ===== ПРЕЛОАДЕР =====
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('boot').classList.add('done'), 1400);
+  setTimeout(() => document.getElementById('boot').remove(), 2100);
+});
+
+// ===== КАСТОМНЫЙ КУРСОР =====
+const cursor = document.getElementById('cursor');
+if (window.matchMedia('(pointer:fine)').matches) {
+  document.documentElement.classList.add('cursor-on');
+  window.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+}
+
+// ===== ПОЯВЛЕНИЕ =====
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+// ===== ОГОНЬ (canvas) =====
+const cv = document.getElementById('fire');
+if (cv) {
+  const ctx = cv.getContext('2d');
+  let W, H, parts = [];
+  const resize = () => {
+    W = cv.width = cv.offsetWidth * devicePixelRatio;
+    H = cv.height = cv.offsetHeight * devicePixelRatio;
+  };
+  resize();
+  window.addEventListener('resize', resize);
+  class P {
+    constructor(init) {
+      this.init = init;
+      this.reset(true);
+    }
+    reset(skip) {
+      this.x = Math.random() * W;
+      this.y = H + Math.random() * 20;
+      this.r = (2 + Math.random() * 5) * devicePixelRatio;
+      this.vy = -(.6 + Math.random() * 1.6) * devicePixelRatio;
+      this.vx = (Math.random() - .5) * .8 * devicePixelRatio;
+      this.life = 1;
+      this.decay = .008 + Math.random() * .012;
+      if (!skip) this.vy *= 1 + this.r / 4;
+    }
+    step() {
+      this.x += this.vx; this.y += this.vy;
+      this.r *= .996;
+      this.life -= this.decay;
+      if (this.life <= 0 || this.y < -20) this.reset();
+    }
+    draw() {
+      const t = Math.max(0, Math.min(1, this.life));
+      const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 3);
+      g.addColorStop(0, 'rgba(255,190,120,' + (0.9 * t) + ')');
+      g.addColorStop(.4, 'rgba(232,120,60,' + (0.5 * t) + ')');
+      g.addColorStop(1, 'rgba(200,64,46,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r * 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  for (let i = 0; i < 90; i++) parts.push(new P());
+  let frame = 0;
+  (function loop() {
+    ctx.clearRect(0, 0, W, H);
+    // турбулентность
+    for (const p of parts) {
+      p.vx += (Math.random() - .5) * .25 * devicePixelRatio;
+      p.vx = Math.max(-1.4 * devicePixelRatio, Math.min(1.4 * devicePixelRatio, p.vx));
+      p.step(); p.draw();
+    }
+    frame++;
+    requestAnimationFrame(loop);
+  })();
+}
+</script>
+</body>
+</html>
