@@ -90,7 +90,9 @@
   .hero h1{position:relative;z-index:2;font-size:clamp(4.2rem,17vw,13rem);font-weight:700;color:var(--ink);line-height:.9;letter-spacing:-.04em}
   .hero h1 .dot{color:var(--rust)}
   .hero .lede{position:relative;z-index:2;max-width:56ch;margin-top:2rem;color:var(--ink-dim);font-size:clamp(.95rem,1.4vw,1.1rem);line-height:1.7;padding-left:1.4rem;border-left:2px solid var(--rust)}
-  .hero .cta{position:relative;z-index:2;margin-top:2.8rem;display:flex;gap:1rem;flex-wrap:wrap}
+  .hero .hero-promise{position:relative;z-index:2;margin-top:1.2rem;font-family:'Chakra Petch',sans-serif;font-weight:500;font-size:clamp(1.1rem,2.4vw,1.6rem);text-transform:uppercase;letter-spacing:.06em;color:var(--rust-hot)}
+  .hero .cta{position:relative;z-index:2;margin-top:2.8rem;display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
+  .cta-note{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);max-width:240px;line-height:1.5}
   /* ===== КНОПКИ ===== */
   .btn{
     display:inline-flex;align-items:center;gap:.7em;
@@ -223,6 +225,7 @@
     .topbar .nav{display:none}
     .reg-item{grid-template-columns:1fr;gap:.8rem}
     .reg-item .mark{display:none}
+    .how{grid-template-columns:1fr !important}
   }
   @media (max-width:560px){
     .wrap{padding:0 1.4rem}
@@ -265,6 +268,7 @@
     <span>АРХИВ <b>2026</b></span>
   </div>
   <h1 class="rv in">AID<span class="dot">.</span></h1>
+  <p class="hero-promise rv in">AI-агент, который автоматизирует рутину вашего бизнеса</p>
   <p class="lede rv in">
     Рутина съела ваш бизнес. Заявки гниют во входящих, клиенты теряются,
     отчёты рождаются вручную. Архив выжившего знает одно: после конца света
@@ -272,6 +276,7 @@
   </p>
   <div class="cta rv in">
     <a class="btn primary" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Вызвать агента</a>
+    <span class="cta-note">Бесплатно 3 дня · Без карты · Отмена в один клик</span>
     <a class="btn ghost" href="#ranks">Уровни снаряжения</a>
   </div>
 </header>
@@ -335,6 +340,36 @@
         <p>Контакты, заявки, отчёты — наведён порядок, всё в одном месте.</p>
         <span class="mark">Развёрнуто →</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ДОКАЗАТЕЛЬСТВА / КАК РАБОТАЕТ -->
+<section class="sec" id="proof">
+  <div class="wrap">
+    <div class="kicker rv">Доказательства</div>
+    <h2 class="sec-title rv">Как это работает</h2>
+    <p class="sec-sub rv">Никакой магии: три шага, и рутина уходит с ваших плеч. Прозрачно, измеримо, под ключ.</p>
+    <div class="how" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:4rem">
+      <div class="how-step rv" style="background:var(--bg);padding:2.4rem;min-height:220px">
+        <span class="n" style="font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:2.4rem;color:var(--rust);line-height:1;display:block;margin-bottom:1.2rem">01</span>
+        <h3 style="font-size:1.15rem;margin-bottom:.8rem">Разведка</h3>
+        <p style="font-size:.85rem;color:var(--ink-dim);line-height:1.6">Разбираем ваши процессы: откуда приходят заявки, где теряются клиенты, сколько времени съедает рутина.</p>
+      </div>
+      <div class="how-step rv" data-d="1" style="background:var(--bg);padding:2.4rem;min-height:220px">
+        <span class="n" style="font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:2.4rem;color:var(--rust);line-height:1;display:block;margin-bottom:1.2rem">02</span>
+        <h3 style="font-size:1.15rem;margin-bottom:.8rem">Автоматизация</h3>
+        <p style="font-size:.85rem;color:var(--ink-dim);line-height:1.6">Собираем ботов, автоответы, триггеры и отчёты под вашу задачу. Всё в вашем тоне, на ваших каналах.</p>
+      </div>
+      <div class="how-step rv" data-d="2" style="background:var(--bg);padding:2.4rem;min-height:220px">
+        <span class="n" style="font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:2.4rem;color:var(--rust);line-height:1;display:block;margin-bottom:1.2rem">03</span>
+        <h3 style="font-size:1.15rem;margin-bottom:.8rem">Измерение</h3>
+        <p style="font-size:.85rem;color:var(--ink-dim);line-height:1.6">Смотрим цифры: сколько заявок обработано, сколько времени сэкономлено. Доводим до измеримого результата.</p>
+      </div>
+    </div>
+    <div class="guarantee rv" data-d="2" style="margin-top:2.6rem;border:1px solid var(--rust);padding:1.6rem 2rem;display:flex;gap:1.4rem;align-items:center;flex-wrap:wrap">
+      <span style="font-family:'Chakra Petch',sans-serif;font-size:2rem;color:var(--rust)">✓</span>
+      <p style="font-size:.9rem;color:var(--ink-dim);line-height:1.6;flex:1;min-width:240px"><b style="color:var(--ink)">Гарантия:</b> 3 дня бесплатно — полный доступ без карты. Если не оцените, просто не продлеваете. Возврат — в течение 3 дней при неиспользовании сервиса.</p>
     </div>
   </div>
 </section>
