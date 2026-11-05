@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AID — Архив выжившего</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0a09;
+    --bg2:#141210;
+    --bg3:#1c1916;
+    --ink:#ece6da;          /* спектральный тёплый белый */
+    --ink-dim:#a39a8a;
+    --ink-faint:#6d655a;
+    --line:#35302a;
+    --line-soft:#241f1b;
+    --rust:#c8402e;         /* сигнальный ржавый */
+    --rust-hot:#e85a3f;
+    --amber:#e8a45c;        /* тёплый уголь-отблеск */
+    --fire-a:rgba(200,64,46,.5);
+    --fire-b:rgba(232,164,92,.25);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.65;
+    font-size:16px;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--rust);color:var(--bg)}
+  h1,h2,h3{font-family:'Chakra Petch',system-ui,sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:-.02em;line-height:1.02}
+  a{color:inherit;text-decoration:none}
+  /* ===== КАСТОМНЫЙ КУРСОР ===== */
+  .cursor{position:fixed;left:0;top:0;z-index:9999;width:44px;height:44px;pointer-events:none;opacity:0;transition:opacity .3s}
+  .cursor::before,.cursor::after{content:"";position:absolute;background:var(--rust)}
+  .cursor::before{left:50%;top:0;width:1px;height:100%;transform:translateX(-50%)}
+  .cursor::after{top:50%;left:0;height:1px;width:100%;transform:translateY(-50%)}
+  html.cursor-on .cursor{opacity:.85}
+  html.cursor-on,html.cursor-on *{cursor:none !important}
+  /* ===== ПРЕЛОАДЕР ===== */
+  #boot{
+    position:fixed;inset:0;z-index:10000;background:var(--bg);
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    gap:1.6rem;font-family:'IBM Plex Mono',monospace;font-size:.8rem;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);
+  }
+  #boot .bootline{display:flex;gap:.8rem;align-items:center}
+  #boot .bootline .ok{color:var(--rust)}
+  #boot .bar{width:min(320px,60vw);height:1px;background:var(--line);position:relative;overflow:hidden}
+  #boot .bar i{position:absolute;inset:0;background:var(--rust);transform:translateX(-100%);animation:load 1.6s cubic-bezier(.22,1,.36,1) forwards}
+  @keyframes load{to{transform:translateX(0)}}
+  #boot.done{opacity:0;pointer-events:none;transition:opacity .5s}
+  /* ===== ТОПБАР ===== */
+  .topbar{
+    position:fixed;top:0;left:0;right:0;z-index:900;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:1.1rem 2.4rem;
+    font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink-dim);
+    background:linear-gradient(180deg, rgba(11,10,9,.9), transparent);
+    mix-blend-mode:normal;
+  }
+  .topbar .sig{display:flex;align-items:center;gap:.7rem;color:var(--ink)}
+  .dotl{width:7px;height:7px;border-radius:50%;background:var(--rust);box-shadow:0 0 14px var(--rust);animation:pulse 2.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  .topbar .nav{display:flex;gap:1.8rem}
+  .topbar .nav a{position:relative;padding-bottom:.25em;opacity:.75;transition:opacity .15s}
+  .topbar .nav a:hover{opacity:1}
+  .topbar .nav a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--rust);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+  .topbar .nav a:hover::after{transform:scaleX(1)}
+  /* ===== ГЕРОЙ ===== */
+  .hero{
+    position:relative;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:9rem 2.4rem 3.4rem;
+    overflow:hidden;
+    background:radial-gradient(120% 80% at 50% 100%, var(--bg2) 0%, var(--bg) 60%);
+  }
+  #fire{position:absolute;left:0;right:0;bottom:0;height:60%;z-index:0;opacity:.9}
+  .hero-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(90% 60% at 50% 110%, transparent 30%, rgba(11,10,9,.85) 100%);}
+  .hero .meta{position:relative;z-index:2;display:flex;gap:1.6rem;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:1.6rem}
+  .hero .meta b{color:var(--ink-dim);font-weight:500}
+  .hero h1{position:relative;z-index:2;font-size:clamp(4.2rem,17vw,13rem);font-weight:700;color:var(--ink);line-height:.9;letter-spacing:-.04em}
+  .hero h1 .dot{color:var(--rust)}
+  .hero .lede{position:relative;z-index:2;max-width:56ch;margin-top:2rem;color:var(--ink-dim);font-size:clamp(.95rem,1.4vw,1.1rem);line-height:1.7;padding-left:1.4rem;border-left:2px solid var(--rust)}
+  .hero .cta{position:relative;z-index:2;margin-top:2.8rem;display:flex;gap:1rem;flex-wrap:wrap}
+  /* ===== КНОПКИ ===== */
+  .btn{
+    display:inline-flex;align-items:center;gap:.7em;
+    font-family:'Chakra Petch',sans-serif;font-weight:600;
+    font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;
+    padding:1.05em 2em;
+    border:1px solid var(--line);
+    border-radius:2px;
+    color:var(--ink);
+    background:transparent;
+    transition:background .18s, border-color .18s, color .18s, transform .12s, box-shadow .25s;
+    position:relative;overflow:hidden;
+  }
+  .btn::after{content:"";position:absolute;inset:0;background:var(--rust);transform:translateY(101%);transition:transform .3s cubic-bezier(.22,1,.36,1);z-index:-1}
+  .btn:hover{transform:translateY(-2px);border-color:var(--rust)}
+  .btn:hover::after{transform:translateY(0)}
+  .btn:hover{color:var(--bg)}
+  .btn.primary{background:var(--rust);border-color:var(--rust);color:var(--bg)}
+  .btn.primary::after{background:var(--rust-hot)}
+  .btn.primary:hover{box-shadow:0 0 34px rgba(200,64,46,.4)}
+  .btn.ghost::after{background:var(--ink)}
+  .btn.ghost:hover{border-color:var(--ink)}
+  /* ===== ТИКЕР ===== */
+  .ticker{
+    overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--bg2);padding:.9rem 0;white-space:nowrap;position:relative;
+  }
+  .ticker .track{display:inline-block;animation:scrollx 30s linear infinite}
+  .ticker span{font-family:'Chakra Petch',sans-serif;font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-dim);margin-right:3rem}
+  .ticker span em{font-style:normal;color:var(--rust)}
+  @keyframes scrollx{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  /* ===== СЕКЦИИ ===== */
+  section{position:relative}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 2.4rem}
+  .sec{padding:9rem 0}
+  .kicker{display:inline-flex;align-items:center;gap:.8rem;font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;color:var(--rust);margin-bottom:1.4rem}
+  .kicker::before{content:"";width:34px;height:1px;background:var(--rust)}
+  .sec-title{font-size:clamp(2rem,5vw,3.8rem);max-width:18ch;font-weight:600}
+  .sec-sub{max-width:56ch;color:var(--ink-dim);margin-top:1.4rem;font-size:.98rem}
+  /* ===== РЕЕСТР (ЧТО ДЕЛАЕТ) ===== */
+  .registry{border-top:1px solid var(--line)}
+  .reg-item{
+    display:grid;grid-template-columns:76px 1fr 2fr;gap:2rem;
+    padding:2.6rem 0;border-bottom:1px solid var(--line);
+    align-items:baseline;transition:background .25s;position:relative;
+  }
+  .reg-item:hover{background:var(--bg2)}
+  .reg-item .num{font-family:'Chakra Petch',sans-serif;font-weight:300;font-size:1.1rem;color:var(--ink-faint)}
+  .reg-item h3{font-size:clamp(1.2rem,2.4vw,1.7rem);font-weight:600}
+  .reg-item p{color:var(--ink-dim);font-size:.9rem;line-height:1.6}
+  .reg-item .mark{justify-self:end;color:var(--ink-faint);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;opacity:0;transform:translateX(-6px);transition:all .3s;align-self:center}
+  .reg-item:hover .mark{opacity:1;transform:none;color:var(--rust)}
+  /* ===== ПИК: СИГНАЛ ===== */
+  .signal{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .signal .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center}
+  .statwrap{position:relative;padding:3rem;border:1px solid var(--line);background:var(--bg3);overflow:hidden}
+  .statwrap::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 100%, var(--fire-a) 0%, transparent 55%);opacity:.35}
+  .stat{position:relative;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:clamp(4rem,9vw,7rem);line-height:1;color:var(--ink)}
+  .stat em{font-style:normal;color:var(--rust)}
+  .statlabel{position:relative;margin-top:.8rem;color:var(--ink-dim);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase}
+  .statsub{position:relative;margin-top:2rem;color:var(--ink-faint);font-size:.8rem;line-height:1.6}
+  .bars{display:flex;gap:8px;align-items:flex-end;height:200px;margin-top:2.4rem}
+  .bars i{flex:1;background:linear-gradient(180deg,var(--rust-hot),var(--rust));transform-origin:bottom;animation:rise 1.4s cubic-bezier(.22,1,.36,1) both}
+  .bars i:nth-child(1){height:92%;animation-delay:.05s}.bars i:nth-child(2){height:84%;animation-delay:.1s}
+  .bars i:nth-child(3){height:88%;animation-delay:.15s}.bars i:nth-child(4){height:76%;animation-delay:.2s}
+  .bars i:nth-child(5){height:22%;animation-delay:.25s}.bars i:nth-child(6){height:16%;animation-delay:.3s}
+  .bars i:nth-child(7){height:19%;animation-delay:.35s}.bars i:nth-child(8){height:13%;animation-delay:.4s}
+  @keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  .signal .legend{display:flex;justify-content:space-between;margin-top:.8rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint)}
+  /* ===== ЦЕННИКИ: УРОВНИ СНАРЯЖЕНИЯ ===== */
+  .ranks{border-top:1px solid var(--line)}
+  .rank{
+    display:grid;grid-template-columns:110px 1.3fr 1fr 1fr;gap:2rem;
+    padding:3rem 0;border-bottom:1px solid var(--line);
+    align-items:center;position:relative;transition:background .25s;
+  }
+  .rank:hover{background:var(--bg2)}
+  .rank .rnum{font-family:'Chakra Petch',sans-serif;font-size:2.6rem;font-weight:300;color:var(--ink-faint);line-height:1}
+  .rank .rname{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:600;text-transform:uppercase}
+  .rank .rname small{display:block;font-family:'IBM Plex Mono',monospace;font-size:.68rem;font-weight:400;letter-spacing:.2em;color:var(--ink-faint);margin-top:.5rem;text-transform:uppercase}
+  .rank .rprice{font-family:'Chakra Petch',sans-serif;font-size:clamp(2.4rem,4.5vw,3.6rem);font-weight:700;line-height:1;letter-spacing:-.03em}
+  .rank .rprice small{font-size:.5em;color:var(--ink-faint);font-weight:400;letter-spacing:.1em}
+  .rank .ract{justify-self:end}
+  .rank .features{grid-column:2 / -1;color:var(--ink-dim);font-size:.85rem;line-height:1.7;padding-top:.4rem}
+  .rank .features span{display:inline-flex;align-items:center;gap:.6rem;margin-right:2rem;margin-bottom:.4rem}
+  .rank .features span::before{content:"▸";color:var(--rust)}
+  .rank.core{background:var(--bg3);border-left:2px solid var(--rust)}
+  .rank.core .rnum{color:var(--rust)}
+  .rank.core .rprice{color:var(--rust-hot)}
+  .rank .tag{position:absolute;top:1.2rem;right:0;background:var(--rust);color:var(--bg);font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:.5em 1.2em}
+  /* ===== ПРОТОКОЛ ===== */
+  .proto{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .proto .step{background:var(--bg);padding:2.2rem 1.8rem;position:relative;min-height:190px}
+  .proto .step .n{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:2.4rem;color:var(--rust);line-height:1;display:block;margin-bottom:1.2rem}
+  .proto .step p{font-size:.8rem;color:var(--ink-dim);line-height:1.6}
+  .proto .step:hover{background:var(--bg2)}
+  /* ===== ДОКУМЕНТЫ/КОНТАКТЫ ===== */
+  .final{background:var(--bg2);border-top:1px solid var(--line)}
+  .final .grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem}
+  .doclist{display:flex;flex-direction:column;margin-top:1.8rem}
+  .doclist a{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0;border-bottom:1px solid var(--line);font-size:.9rem;transition:color .15s, padding-left .2s}
+  .doclist a:hover{color:var(--rust);padding-left:8px}
+  .doclist .x{color:var(--ink-faint);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase}
+  .links{list-style:none;margin-top:1.4rem}
+  .links li{display:flex;justify-content:space-between;padding:1.1rem 0;border-bottom:1px solid var(--line);font-size:.9rem}
+  .links .k{color:var(--ink-faint);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;align-self:center}
+  .links a:hover{color:var(--rust)}
+  footer{border-top:1px solid var(--line);padding:2.6rem 0;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
+  footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+  footer a:hover{color:var(--rust)}
+  /* ===== ПОЯВЛЕНИЕ ===== */
+  .rv{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1)}
+  .rv.in{opacity:1;transform:none}
+  .rv[data-d="1"]{transition-delay:.1s}.rv[data-d="2"]{transition-delay:.2s}.rv[data-d="3"]{transition-delay:.3s}
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+    .rv{opacity:1;transform:none}
+    html.cursor-on,html.cursor-on *{cursor:auto !important}
+  }
+  /* ===== АДАПТИВ ===== */
+  @media (max-width:960px){
+    .hero{justify-content:flex-end;padding:8rem 1.6rem 2.6rem}
+    .signal .grid{grid-template-columns:1fr;gap:2.6rem}
+    .final .grid{grid-template-columns:1fr;gap:3rem}
+    .proto{grid-template-columns:1fr 1fr}
+    .proto .step{min-height:0}
+    .rank{grid-template-columns:1fr;gap:1.2rem}
+    .rank .ract{justify-self:start}
+    .rank .features{grid-column:1}
+    .topbar .nav{display:none}
+    .reg-item{grid-template-columns:1fr;gap:.8rem}
+    .reg-item .mark{display:none}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 1.4rem}
+    .sec{padding:5.5rem 0}
+    .proto{grid-template-columns:1fr}
+    .hero .meta{flex-wrap:wrap}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- ПРЕЛОАДЕР -->
+<div id="boot">
+  <div class="bootline"><span class="ok">■</span> AID // ИНИЦИАЛИЗАЦИЯ АРХИВА</div>
+  <div class="bar"><i></i></div>
+  <div class="bootline" style="font-size:.6rem;color:var(--ink-faint)">ПОЗЫВНОЙ ПОДТВЕРЖДЁН</div>
+</div>
+
+<!-- ТОПБАР -->
+<div class="topbar">
+  <span class="sig"><span class="dotl"></span> AID // ПОЗЫВНОЙ</span>
+  <nav class="nav">
+    <a href="#registry">Реестр</a>
+    <a href="#signal">Сигнал</a>
+    <a href="#ranks">Снаряжение</a>
+    <a href="#proto">Протокол</a>
+    <a href="#final">Связь</a>
+  </nav>
+</div>
+
+<!-- ГЕРОЙ -->
+<header class="hero">
+  <canvas id="fire"></canvas>
+  <div class="hero-overlay"></div>
+  <div class="meta rv in">
+    <span>СЕКТОР <b>БИЗНЕС</b></span>
+    <span>СТАТУС <b style="color:var(--rust)">ОНЛАЙН</b></span>
+    <span>АРХИВ <b>2026</b></span>
+  </div>
+  <h1 class="rv in">AID<span class="dot">.</span></h1>
+  <p class="lede rv in">
+    Рутина съела ваш бизнес. Заявки гниют во входящих, клиенты теряются,
+    отчёты рождаются вручную. Архив выжившего знает одно: после конца света
+    бюрократии остаётся агент, который работает, пока остальные тушат пожары.
+  </p>
+  <div class="cta rv in">
+    <a class="btn primary" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Вызвать агента</a>
+    <a class="btn ghost" href="#ranks">Уровни снаряжения</a>
+  </div>
+</header>
+
+<!-- ТИКЕР -->
+<div class="ticker">
+  <div class="track">
+    <span>АВТООТВЕТЫ <em>24/7</em></span>
+    <span>АУТРИЧ <em>АВТО</em></span>
+    <span>ЗАПИСЬ КЛИЕНТОВ <em>АВТО</em></span>
+    <span>БОТЫ <em>TELEGRAM / WHATSAPP</em></span>
+    <span>РАБОТА <em>ПОД КЛЮЧ</em></span>
+    <span>АВТООТВЕТЫ <em>24/7</em></span>
+    <span>АУТРИЧ <em>АВТО</em></span>
+    <span>ЗАПИСЬ КЛИЕНТОВ <em>АВТО</em></span>
+    <span>БОТЫ <em>TELEGRAM / WHATSAPP</em></span>
+    <span>РАБОТА <em>ПОД КЛЮЧ</em></span>
+  </div>
+</div>
+
+<!-- РЕЕСТР -->
+<section class="sec" id="registry">
+  <div class="wrap">
+    <div class="kicker rv">Боевой лист</div>
+    <h2 class="sec-title rv">Что делает AID</h2>
+    <p class="sec-sub rv">Шесть операторов. Ни одного выходного. Всё — под ключ.</p>
+    <div class="registry" style="margin-top:4rem">
+      <div class="reg-item rv">
+        <span class="num">01</span>
+        <h3>Автоответы и заявки</h3>
+        <p>Ни одна заявка не теряется. Ответ — за секунды, в любое время суток.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+      <div class="reg-item rv" data-d="1">
+        <span class="num">02</span>
+        <h3>Аутрич</h3>
+        <p>Холодные касания, персонализация, follow-up. Вручную это недели — здесь это фон.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+      <div class="reg-item rv" data-d="2">
+        <span class="num">03</span>
+        <h3>Запись клиентов</h3>
+        <p>Голос, чат, сайт. Расписание живёт само, двойных броней нет.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+      <div class="reg-item rv" data-d="3">
+        <span class="num">04</span>
+        <h3>Боты для Telegram и WhatsApp</h3>
+        <p>Поддержка, продажи, онбординг — на автопилоте, в вашем тоне.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+      <div class="reg-item rv" data-d="4">
+        <span class="num">05</span>
+        <h3>Агенты для команды</h3>
+        <p>Внутренние помощники, которые разгружают людей от рутины.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+      <div class="reg-item rv" data-d="5">
+        <span class="num">06</span>
+        <h3>Порядок в данных</h3>
+        <p>Контакты, заявки, отчёты — наведён порядок, всё в одном месте.</p>
+        <span class="mark">Развёрнуто →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ПИК: СИГНАЛ -->
+<section class="sec signal" id="signal">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="kicker rv">Измерение</div>
+        <h2 class="sec-title rv">Сколько часов вы сжигаете на рутину?</h2>
+        <p class="sec-sub rv">Это не абстракция — это часы, которые не возвращаются. AID возвращает их вам, каждый день.</p>
+        <div class="bars rv" data-d="1">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="legend rv" data-d="2">
+          <span>До AID</span><span>После</span>
+        </div>
+      </div>
+      <div class="statwrap rv" data-d="1">
+        <div class="stat">47<em>→</em>3</div>
+        <div class="statlabel">часов в неделю на рутину</div>
+        <div class="statsub">Средняя экономия времени при автоматизации обработки заявок, аутрича и отчётов.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ЦЕННИКИ: УРОВНИ СНАРЯЖЕНИЯ -->
+<section class="sec" id="ranks">
+  <div class="wrap">
+    <div class="kicker rv">Уровни снаряжения</div>
+    <h2 class="sec-title rv">Тарифы</h2>
+    <p class="sec-sub rv">Выживание не бывает бесплатным. Но начинается — с бесплатного.</p>
+    <div class="ranks" style="margin-top:4rem">
+      <div class="rank rv">
+        <span class="rnum">I</span>
+        <div class="rname">Пробный<small>разведка · 3 дня</small></div>
+        <div class="rprice">0 <small>₽ / 3 дня</small></div>
+        <div class="ract"><a class="btn ghost" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Разведка</a></div>
+        <div class="features"><span>Полный доступ на 3 дня</span><span>Один раз на пользователя</span><span>Без карты</span></div>
+      </div>
+      <div class="rank core rv" data-d="1">
+        <span class="tag">Основной</span>
+        <span class="rnum">II</span>
+        <div class="rname">Месяц<small>полное снаряжение</small></div>
+        <div class="rprice">999 <small>₽ / 30 дней</small></div>
+        <div class="ract"><a class="btn primary" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">Принять</a></div>
+        <div class="features"><span>Полный доступ ко всем функциям</span><span>Приоритетная связь</span><span>Отмена в любой момент</span></div>
+      </div>
+      <div class="rank rv" data-d="2">
+        <span class="rnum">III</span>
+        <div class="rname">Год<small>дальняя дистанция</small></div>
+        <div class="rprice">9 990 <small>₽ / 365 дней</small></div>
+        <div class="ract"><a class="btn ghost" href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">В бой</a></div>
+        <div class="features"><span>Полный доступ на год</span><span>Скидка 17%</span><span>Все будущие функции</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ПРОТОКОЛ -->
+<section class="sec" id="proto">
+  <div class="wrap">
+    <div class="kicker rv">Протокол</div>
+    <h2 class="sec-title rv">Как оплатить и получить доступ</h2>
+    <div class="proto" style="margin-top:4rem">
+      <div class="step rv"><span class="n">1</span><p>Напишите боту в Telegram</p></div>
+      <div class="step rv" data-d="1"><span class="n">2</span><p>Выберите тариф командой /subscribe</p></div>
+      <div class="step rv" data-d="2"><span class="n">3</span><p>Оплатите картой или через СБП</p></div>
+      <div class="step rv" data-d="3"><span class="n">4</span><p>Доступ — сразу после оплаты</p></div>
+      <div class="step rv" data-d="4"><span class="n">5</span><p>Чек — на указанный email</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ДОКУМЕНТЫ / КОНТАКТЫ -->
+<section class="sec final" id="final">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <div class="kicker rv">Архив</div>
+        <h2 class="sec-title rv">Документы</h2>
+        <p class="sec-sub rv" style="margin-bottom:0">Условия — открыто. Без мелкого шрифта.</p>
+        <div class="doclist">
+          <a class="rv" href="https://kirikov1982evgenii-sketch.github.io/aid/oferta.html" target="_blank" rel="noopener">Публичная оферта <span class="x">Открыть →</span></a>
+          <a class="rv" data-d="1" href="https://kirikov1982evgenii-sketch.github.io/aid/privacy.html" target="_blank" rel="noopener">Политика конфиденциальности <span class="x">Открыть →</span></a>
+          <a class="rv" data-d="2" href="https://kirikov1982evgenii-sketch.github.io/aid/refund.html" target="_blank" rel="noopener">Условия возврата <span class="x">Открыть →</span></a>
+        </div>
+      </div>
+      <div>
+        <div class="kicker rv">Связь</div>
+        <h2 class="sec-title rv">Канал связи открыт</h2>
+        <p class="sec-sub rv" style="margin-bottom:0">Штаб работает круглосуточно. Выходные у рутины — не предусмотрены.</p>
+        <ul class="links">
+          <li class="rv"><span class="k">Telegram-бот</span><a href="https://t.me/germeskamylove_bot" target="_blank" rel="noopener">@germeskamylove_bot</a></li>
+          <li class="rv" data-d="1"><span class="k">Канал</span><a href="https://t.me/AIDNEWLVL" target="_blank" rel="noopener">@AIDNEWLVL</a></li>
+          <li class="rv" data-d="2"><span class="k">Email</span><a href="mailto:aiaidnewlvl@yandex.com">aiaidnewlvl@yandex.com</a></li>
+          <li class="rv" data-d="3"><span class="k">ИНН</span><span style="color:var(--ink-faint)">[ИНН]</span></li>
+          <li class="rv" data-d="4"><span class="k">ОГРНИП</span><span style="color:var(--ink-faint)">[ОГРНИП]</span></li>
+          <li class="rv" data-d="5"><span class="k">Адрес</span><span style="color:var(--ink-faint)">[Адрес]</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 AID — архив выжившего.</span>
+    <span><a href="https://kirikov1982evgenii-sketch.github.io/aid/privacy.html" target="_blank" rel="noopener">Политика</a> · <a href="https://kirikov1982evgenii-sketch.github.io/aid/oferta.html" target="_blank" rel="noopener">Оферта</a></span>
+  </div>
+</footer>
+
+<script>
+// ===== ПРЕЛОАДЕР =====
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('boot').classList.add('done'), 1400);
+  setTimeout(() => document.getElementById('boot').remove(), 2100);
+});
+
+// ===== КАСТОМНЫЙ КУРСОР =====
+const cursor = document.getElementById('cursor');
+if (window.matchMedia('(pointer:fine)').matches) {
+  document.documentElement.classList.add('cursor-on');
+  window.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+}
+
+// ===== ПОЯВЛЕНИЕ =====
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+// ===== ОГОНЬ (canvas) =====
+const cv = document.getElementById('fire');
+if (cv) {
+  const ctx = cv.getContext('2d');
+  let W, H, parts = [];
+  const resize = () => {
+    W = cv.width = cv.offsetWidth * devicePixelRatio;
+    H = cv.height = cv.offsetHeight * devicePixelRatio;
+  };
+  resize();
+  window.addEventListener('resize', resize);
+  class P {
+    constructor(init) {
+      this.init = init;
+      this.reset(true);
+    }
+    reset(skip) {
+      this.x = Math.random() * W;
+      this.y = H + Math.random() * 20;
+      this.r = (2 + Math.random() * 5) * devicePixelRatio;
+      this.vy = -(.6 + Math.random() * 1.6) * devicePixelRatio;
+      this.vx = (Math.random() - .5) * .8 * devicePixelRatio;
+      this.life = 1;
+      this.decay = .008 + Math.random() * .012;
+      if (!skip) this.vy *= 1 + this.r / 4;
+    }
+    step() {
+      this.x += this.vx; this.y += this.vy;
+      this.r *= .996;
+      this.life -= this.decay;
+      if (this.life <= 0 || this.y < -20) this.reset();
+    }
+    draw() {
+      const t = Math.max(0, Math.min(1, this.life));
+      const g = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 3);
+      g.addColorStop(0, 'rgba(255,190,120,' + (0.9 * t) + ')');
+      g.addColorStop(.4, 'rgba(232,120,60,' + (0.5 * t) + ')');
+      g.addColorStop(1, 'rgba(200,64,46,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r * 3, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  for (let i = 0; i < 90; i++) parts.push(new P());
+  let frame = 0;
+  (function loop() {
+    ctx.clearRect(0, 0, W, H);
+    // турбулентность
+    for (const p of parts) {
+      p.vx += (Math.random() - .5) * .25 * devicePixelRatio;
+      p.vx = Math.max(-1.4 * devicePixelRatio, Math.min(1.4 * devicePixelRatio, p.vx));
+      p.step(); p.draw();
+    }
+    frame++;
+    requestAnimationFrame(loop);
+  })();
+}
+</script>
+</body>
+</html>
