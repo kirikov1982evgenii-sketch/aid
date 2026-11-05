@@ -1,0 +1,37 @@
+{
+  "name": "AID CODEX #0015",
+  "description": "Генеративный артефакт разума AID. Ключ-артефакт с utility: закрытый доступ к расшифровкам AID, голосование по релизам, мерч для высоких градаций. Роялти 10%.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft/art/0015.png",
+  "attributes": [
+    {
+      "trait_type": "Core",
+      "value": "Cube"
+    },
+    {
+      "trait_type": "Core Color",
+      "value": "#ec4899"
+    },
+    {
+      "trait_type": "Signal",
+      "value": "Wave"
+    },
+    {
+      "trait_type": "Matrix",
+      "value": "Dense"
+    },
+    {
+      "trait_type": "Rift",
+      "value": "Calm"
+    },
+    {
+      "trait_type": "Grade",
+      "value": "Rare"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty": 10,
+  "animation_url": "https://kirikov1982evgenii-sketch.github.io/aid/nft/anim/0015.mp4"
+}
