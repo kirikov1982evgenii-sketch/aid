@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Свет",
+  "description": "Итог странствия. Разум, достигший полноты, излучает свет.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0025.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Свет"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "5"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "полнота"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

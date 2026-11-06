@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Генезис",
+  "description": "Первый импульс мысли. Из ничего — точка, из точки — свет. Здесь начинается всё, что ты видишь дальше.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0001.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Генезис"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "1"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "порядок"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

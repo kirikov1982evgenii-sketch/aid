@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Импульс",
+  "description": "Действие быстрее обдумывания. Чистый порыв, оставляющий световой след.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0018.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Импульс"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "3"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "скорость"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

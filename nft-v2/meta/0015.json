@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Предел",
+  "description": "Край возможного: стена света на границе тьмы. За ней — неизвестность.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0015.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Предел"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "4"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "горизонт"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

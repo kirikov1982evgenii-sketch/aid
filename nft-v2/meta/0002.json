@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Искра",
+  "description": "Вспышка первого вывода — мгновенный разряд, который зажигает путь.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0002.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Искра"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "1"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "энергия"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

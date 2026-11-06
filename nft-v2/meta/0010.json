@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Пробуждение",
+  "description": "Рекурсия: мысль, думающая о мысли. Спираль, глядящая на себя.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0010.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Пробуждение"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "4"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "осознание"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

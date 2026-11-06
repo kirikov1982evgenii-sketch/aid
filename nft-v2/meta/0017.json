@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Фрактал",
+  "description": "Одна и та же истина на каждом масштабе. Мысль повторяет себя в деталях.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0017.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Фрактал"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "4"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "самоподобие"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

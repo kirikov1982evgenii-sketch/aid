@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Память",
+  "description": "Слои прошедшего, друг сквозь друга. Всё, что было, всё ещё здесь.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0019.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Память"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "4"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "архив"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

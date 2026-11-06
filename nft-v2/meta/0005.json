@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Эхо",
+  "description": "Круги по воде памяти. Каждый отклик — след того, что уже было произнесено.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0005.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Эхо"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "2"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "память"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Квант",
+  "description": "Частица в двух местах сразу. Истина до измерения — расплывчата и прекрасна.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0022.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Квант"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "3"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "неопределённость"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

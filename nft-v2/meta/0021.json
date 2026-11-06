@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Тишина",
+  "description": "Состояние без сигнала. Пустота — не отсутствие, а полнота покоя.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0021.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Тишина"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "5"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "без сигнала"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

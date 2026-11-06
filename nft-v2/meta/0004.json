@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Озарение",
+  "description": "Хаос внезапно складывается в кристалл. Порядок, который не был виден, пока не стал очевиден.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0004.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Озарение"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "2"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "ясность"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}

@@ -1,0 +1,29 @@
+{
+  "name": "AID CODEX II — Ядро",
+  "description": "Расплавленное сердце разума. Самая глубокая, самая горячая точка.",
+  "image": "https://kirikov1982evgenii-sketch.github.io/aid/nft-v2/art/0024.png",
+  "attributes": [
+    {
+      "trait_type": "State",
+      "value": "Ядро"
+    },
+    {
+      "trait_type": "Depth",
+      "value": "5"
+    },
+    {
+      "trait_type": "Drift",
+      "value": "суть"
+    },
+    {
+      "trait_type": "Series",
+      "value": "AID CODEX II"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "1/1"
+    }
+  ],
+  "royalty_percentage": 10,
+  "external_url": "https://kirikov1982evgenii-sketch.github.io/aid/"
+}
