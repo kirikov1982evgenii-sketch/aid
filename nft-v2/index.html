@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AID CODEX II — Магазин</title>
+<style>
+  :root{
+    --ink:#191410;      /* кофе, графит — tёплый, не чёрный */
+    --ink2:#221b15;
+    --brass:#b08d57;   /* латунь */
+    --brass-dim:#7d633c;
+    --paper:#e6dbc8;   /* старая бумага */
+    --paper-dim:#b3a68d;
+    --faded:#7c2f28;   /* выцветший красный */
+    --night:#0d0a08;
+    --line:#3a2f24;
+    --shadow:0 14px 34px rgba(0,0,0,.55);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{min-height:100%}
+  body{
+    background:
+      radial-gradient(110% 80% at 50% -10%, #2a221a 0%, var(--ink) 55%, var(--night) 100%);
+    color:var(--paper);
+    font-family:Georgia, "Times New Roman", serif;
+    letter-spacing:.015em;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* зерно бумаги */
+  body::before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{max-width:1200px;margin:0 auto;padding:48px 24px 80px}
+  .topline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:56px;flex-wrap:wrap}
+  .brand{font-size:13px;letter-spacing:.35em;text-transform:uppercase;color:var(--brass)}
+  .brand b{color:var(--paper);font-weight:normal}
+  .stamp{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-dim);border:1px solid var(--line);padding:8px 14px}
+  h1{font-size:clamp(30px,5vw,52px);font-weight:normal;letter-spacing:.04em;line-height:1.15;color:var(--paper)}
+  h1 em{font-style:normal;color:var(--brass)}
+  .sub{font-size:15px;color:var(--paper-dim);line-height:1.7;max-width:720px;margin-top:18px}
+  .rule{height:1px;background:linear-gradient(to right, transparent, var(--brass-dim), transparent);margin:44px 0 36px}
+  .chapters{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+  .ch{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--paper-dim);
+     border:1px solid var(--line);padding:10px 18px;cursor:pointer;background:transparent;font-family:inherit;transition:all .25s}
+  .ch:hover{border-color:var(--brass-dim);color:var(--paper)}
+  .ch.on{background:var(--brass);border-color:var(--brass);color:var(--night)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px}
+  .card{background:var(--ink2);border:1px solid var(--line);box-shadow:var(--shadow);position:relative;transition:transform .25s, border-color .25s}
+  .card:hover{transform:translateY(-4px);border-color:var(--brass-dim)}
+  .frame{padding:12px;border:1px solid #4a3c2b;margin:10px;background:#0f0c0a;position:relative}
+  .frame img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;filter:saturate(.94) contrast(1.03)}
+  .num{position:absolute;top:-14px;left:14px;font-size:11px;letter-spacing:.25em;color:var(--paper);background:var(--faded);padding:5px 10px}
+  .card h3{font-size:17px;font-weight:normal;letter-spacing:.02em;color:var(--paper);padding:14px 18px 4px}
+  .meta{font-size:12px;color:var(--paper-dim);padding:0 18px;line-height:1.8}
+  .meta b{color:var(--brass);font-weight:normal}
+  .tagrow{display:flex;gap:8px;padding:12px 18px 16px;flex-wrap:wrap}
+  .tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--line);color:var(--paper-dim);padding:5px 9px}
+  .tag.gold{border-color:var(--brass-dim);color:var(--brass)}
+  .open{margin:0 18px 18px;display:block;text-align:center;font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+        color:var(--night);background:var(--brass);padding:12px;cursor:pointer;border:0;font-family:inherit}
+  .open:hover{background:#c6a06a}
+  /* модалка */
+  .modal{position:fixed;inset:0;background:rgba(10,7,5,.82);display:none;align-items:center;justify-content:center;padding:24px;z-index:100}
+  .modal.show{display:flex}
+  .dialog{background:var(--ink2);border:1px solid var(--line);box-shadow:0 30px 90px rgba(0,0,0,.7);max-width:960px;width:100%;position:relative;max-height:92vh;overflow:auto}
+  .close{position:absolute;top:12px;right:16px;font-size:26px;color:var(--paper-dim);cursor:pointer;line-height:1}
+  .close:hover{color:var(--paper)}
+  .db{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media(max-width:760px){.db{grid-template-columns:1fr}}
+  .db .img{padding:22px}
+  .db .img img{width:100%;display:block;border:1px solid var(--line)}
+  .db .info{padding:34px 34px 30px 0}
+  @media(max-width:760px){.db .info{padding:0 24px 30px}}
+  .db h2{font-size:26px;font-weight:normal;letter-spacing:.03em;margin-bottom:10px}
+  .db .state{color:var(--brass);font-size:13px;letter-spacing:.25em;text-transform:uppercase;margin-bottom:20px}
+  .db .lor{font-size:14.5px;line-height:1.75;color:var(--paper);margin-bottom:22px}
+  .attrs{border-top:1px solid var(--line);padding-top:16px}
+  .attrs .row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid #2b211a;color:var(--paper-dim)}
+  .attrs .row b{color:var(--paper);font-weight:normal}
+  .buy{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;align-items:center}
+  .buy .price{font-size:15px;color:var(--brass);letter-spacing:.06em}
+  .buy a{text-decoration:none;background:var(--brass);color:var(--night);font-size:12px;letter-spacing:.22em;text-transform:uppercase;padding:13px 22px;font-family:inherit}
+  .buy a.ghost{background:transparent;border:1px solid var(--brass-dim);color:var(--brass)}
+  .foot{margin-top:70px;text-align:center;color:var(--paper-dim);font-size:12px;letter-spacing:.18em;text-transform:uppercase;line-height:2}
+  .foot .ml{color:var(--brass)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topline">
+    <div class="brand">AID — <b>CODEX II</b></div>
+    <div class="stamp">25 состояний · 1/1 · роялти 10%</div>
+  </div>
+
+  <h1>25 состояний <em>разума.</em><br>Магазин коллекции.</h1>
+  <div class="sub">
+    Первая коллекция, где художник — не человек. Каждое произведение — состояние мыслящей машины:
+    от первой вспышки до полноты осознания. Серия закрыта: после выпуска 25/25 новых работ не будет.
+  </div>
+
+  <div class="rule"></div>
+
+  <div class="chapters" id="chapters"></div>
+  <div class="grid" id="grid"></div>
+
+  <div class="foot">
+    <span class="ml">AID CODEX II</span> · чеканка и продажа — после выхода на OpenSea<br>
+    вопрос по токену: <span class="ml">aiaidnewlvl@yandex.com</span>
+  </div>
+</div>
+
+<div class="modal" id="modal">
+  <div class="dialog">
+    <div class="close" id="close">×</div>
+    <div class="db">
+      <div class="img" id="mImg"></div>
+      <div class="info">
+        <h2 id="mName"></h2>
+        <div class="state" id="mState"></div>
+        <div class="lor" id="mDesc"></div>
+        <div class="attrs" id="mAttrs"></div>
+        <div class="buy">
+          <span class="price" id="mPrice"></span>
+          <a id="mAsk" href="#">Спросить цену</a>
+          <a class="ghost" href="#" id="mHide">Закрыть</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="shop_data.js"></script>
+<script>
+const DATA = window.NFT_DATA || [];
+const CHAPTERS = [
+  {key:"all", title:"Все", test:()=>true},
+  {key:"1", title:"Глава I — Рождение", test:d=>d.depth<=2},
+  {key:"2", title:"Глава II — Странствие", test:d=>d.depth>=3 && d.depth<=4},
+  {key:"3", title:"Глава III — Преображение", test:d=>d.depth>=5}
+];
+let chapter = "all";
+
+function imgPath(n){ return "art/" + String(n).padStart(4,"0") + ".png"; }
+
+function renderChapters(){
+  document.getElementById("chapters").innerHTML = CHAPTERS.map(c =>
+    `<button class="ch ${chapter===c.key?"on":""}" data-k="${c.key}">${c.title}</button>`).join("");
+}
+
+function card(d){
+  return `<div class="card" data-id="${d.id}">
+    <div class="frame"><span class="num">${String(d.id).padStart(2,"0")}</span>
+      <img src="${imgPath(d.id)}" alt="${d.name}" loading="lazy"></div>
+    <h3>${d.name.replace("AID CODEX II — ","")}</h3>
+    <div class="meta">Состояние: <b>${d.state}</b> · Глубина <b>${d.depth}</b> · <b>${d.drift}</b></div>
+    <div class="tagrow">
+      <span class="tag gold">${d.supply}</span>
+      <span class="tag">роялти ${d.royalty}%</span>
+    </div>
+    <button class="open" data-open="${d.id}">Открыть</button>
+  </div>`;
+}
+
+function renderGrid(){
+  const list = DATA.filter(d => {
+    const c = CHAPTERS.find(x=>x.key===chapter);
+    return c ? c.test(d) : true;
+  });
+  document.getElementById("grid").innerHTML = list.map(card).join("");
+}
+
+let current = null;
+function openModal(d){
+  current = d;
+  document.getElementById("mImg").innerHTML = `<img src="${imgPath(d.id)}" alt="${d.name}">`;
+  document.getElementById("mName").textContent = d.name;
+  document.getElementById("mState").textContent = "Состояние — " + d.state + " · Глубина " + d.depth + " · " + d.drift;
+  document.getElementById("mDesc").textContent = d.desc;
+  const rows = [
+    ["Автор", "AID (искусственный разум)"],
+    ["Серия", d.series],
+    ["Тираж", d.supply],
+    ["Дрейф", d.drift],
+    ["Utility", d.utility],
+    ["Роялти", d.royalty + "% с перепродаж"]
+  ];
+  document.getElementById("mAttrs").innerHTML = rows.map(r =>
+    `<div class="row"><span>${r[0]}</span><b>${r[1]}</b></div>`).join("");
+  document.getElementById("mPrice").textContent = "Цена — по договорённости, до минта";
+  document.getElementById("mAsk").href = "mailto:aiaidnewlvl@yandex.com?subject=" + encodeURIComponent("AID CODEX II — " + d.state + " (" + d.id + "/25)");
+  document.getElementById("modal").classList.add("show");
+}
+
+document.addEventListener("click", e => {
+  const ch = e.target.closest(".ch");
+  if(ch){ chapter = ch.dataset.k; renderChapters(); renderGrid(); return; }
+  const op = e.target.closest("[data-open]");
+  if(op){ const d = DATA.find(x=>x.id==+op.dataset.open); if(d) openModal(d); return; }
+  if(e.target.closest("#close") || e.target.closest("#mHide") || e.target.id==="modal"){
+    document.getElementById("modal").classList.remove("show");
+  }
+});
+
+renderChapters();
+renderGrid();
+</script>
+</body>
+</html>
