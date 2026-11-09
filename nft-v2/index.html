@@ -21,7 +21,8 @@
   html,body{min-height:100%}
   body{
     background:
-      radial-gradient(110% 80% at 50% -10%, #2a221a 0%, var(--ink) 55%, var(--night) 100%);
+      radial-gradient(110% 80% at 50% -10%, #3a2e20 0%, var(--ink) 55%, var(--night) 100%);
+    background-color:var(--ink);
     color:var(--paper);
     font-family:Georgia, "Times New Roman", serif;
     letter-spacing:.015em;
@@ -152,7 +153,7 @@ function renderChapters(){
 function card(d){
   return `<div class="card" data-id="${d.id}">
     <div class="frame"><span class="num">${String(d.id).padStart(2,"0")}</span>
-      <img src="${imgPath(d.id)}" alt="${d.name}" loading="lazy"></div>
+      <img src="${imgPath(d.id)}" alt="${d.name}"></div>
     <h3>${d.name.replace("AID CODEX II — ","")}</h3>
     <div class="meta">Состояние: <b>${d.state}</b> · Глубина <b>${d.depth}</b> · <b>${d.drift}</b></div>
     <div class="tagrow">
